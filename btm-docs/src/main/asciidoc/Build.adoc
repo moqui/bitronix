@@ -13,8 +13,7 @@
 You need to have these softwares installed to be able to build BTM:
 
 * GIT
-* JDK 1.5
-* Apache Maven 2.2.1 (or higher)
+* JDK 17+
 
 [[source]]
 == Getting the Source
@@ -22,7 +21,7 @@ You need to have these softwares installed to be able to build BTM:
 The project uses GIT as it's source code control system.
 The source can be checked out anonymously using:
 
-    git clone git://git.codehaus.org/btm-git.git
+    git clone https://github.com/pythys/bitronix
 
 [[building]]
 == Building
