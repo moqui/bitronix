@@ -1,13 +1,13 @@
-.idea
+*.class
 *.iml
 *.ipr
 *.iws
-target/
 *.tlog
-*.class
-.settings
 .classpath
+.idea
 .project
+.settings
 org.eclipse.core.resources.prefs
 org.eclipse.jdt.core.prefs
 org.eclipse.m2e.core.prefs
+target/
