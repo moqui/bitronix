@@ -352,7 +352,7 @@ public class Console extends JFrame {
         String sequence = JOptionPane.showInputDialog(this, "Enter sequence to search for");
         int searchedSequence;
         try {
-            searchedSequence = new Integer(sequence).intValue();
+            searchedSequence = Integer.valueOf(sequence);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Please input a number", "Find by sequence", JOptionPane.ERROR_MESSAGE);
             return;
