@@ -58,7 +58,7 @@ public class LrcXAConnectionFactory implements XAConnectionFactory {
     public XAConnection createXAConnection() throws JMSException {
         try {
             Class<?> clazz = ClassLoaderUtils.loadClass(connectionFactoryClassName);
-            ConnectionFactory nonXaConnectionFactory = (ConnectionFactory) clazz.newInstance();
+            ConnectionFactory nonXaConnectionFactory = (ConnectionFactory) clazz.getDeclaredConstructor().newInstance();
             PropertyUtils.setProperties(nonXaConnectionFactory, properties);
 
             return new LrcXAConnection(nonXaConnectionFactory.createConnection());
@@ -71,7 +71,7 @@ public class LrcXAConnectionFactory implements XAConnectionFactory {
     public XAConnection createXAConnection(String user, String password) throws JMSException {
         try {
             Class<?> clazz = ClassLoaderUtils.loadClass(connectionFactoryClassName);
-            ConnectionFactory nonXaConnectionFactory = (ConnectionFactory) clazz.newInstance();
+            ConnectionFactory nonXaConnectionFactory = (ConnectionFactory) clazz.getDeclaredConstructor().newInstance();
             PropertyUtils.setProperties(nonXaConnectionFactory, properties);
 
             return new LrcXAConnection(nonXaConnectionFactory.createConnection(user, password));

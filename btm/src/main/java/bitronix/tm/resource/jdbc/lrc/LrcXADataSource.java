@@ -99,7 +99,7 @@ public class LrcXADataSource implements XADataSource {
     public XAConnection getXAConnection() throws SQLException {
         try {
             Class<?> driverClazz = ClassLoaderUtils.loadClass(driverClassName);
-            Driver driver = (Driver) driverClazz.newInstance();
+            Driver driver = (Driver) driverClazz.getDeclaredConstructor().newInstance();
             Properties props = new Properties();
             if (user != null) props.setProperty("user", user);
             if (password != null) props.setProperty("password", password);
@@ -115,7 +115,7 @@ public class LrcXADataSource implements XADataSource {
     public XAConnection getXAConnection(String user, String password) throws SQLException {
         try {
             Class<?> driverClazz = ClassLoaderUtils.loadClass(driverClassName);
-            Driver driver = (Driver) driverClazz.newInstance();
+            Driver driver = (Driver) driverClazz.getDeclaredConstructor().newInstance();
             Properties props = new Properties();
             props.setProperty("user", user);
             props.setProperty("password", password);

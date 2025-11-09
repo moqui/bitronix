@@ -120,7 +120,7 @@ public class TransactionManagerServices {
             } else {
                 try {
                     Class<?> clazz = ClassLoaderUtils.loadClass(configuredJournal);
-                    journal = (Journal) clazz.newInstance();
+                    journal = (Journal) clazz.getDeclaredConstructor().newInstance();
                 } catch (Exception ex) {
                     throw new InitializationException("invalid journal implementation '" + configuredJournal + "'", ex);
                 }
