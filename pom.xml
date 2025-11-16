@@ -2,18 +2,12 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.codehaus</groupId>
-        <artifactId>codehaus-parent</artifactId>
-        <version>4</version>
-    </parent>
-
-    <groupId>org.codehaus.btm</groupId>
-    <artifactId>btm-parent</artifactId>
+    <groupId>org.moqui</groupId>
+    <artifactId>bitronix</artifactId>
     <version>4.0.0-BETA</version>
     <packaging>pom</packaging>
 
@@ -22,16 +16,16 @@
         The Bitronix Transaction Manager (BTM) is a simple but complete implementation of the JTA 1.1 API.
     </description>
     <inceptionYear>2006</inceptionYear>
-    <url>https://github.com/bitronix/btm</url>
+    <url>https://github.com/moqui/bitronix</url>
 
     <organization>
-        <name>Bitronix Software</name>
-        <url>http://bitronix.be/</url>
+        <name>moqui</name>
+        <url>https://moqui.org</url>
     </organization>
 
     <issueManagement>
         <system>github</system>
-        <url>https://github.com/bitronix/btm/issues</url>
+        <url>https://github.com/moqui/bitronix/issues</url>
     </issueManagement>
 
     <licenses>
@@ -43,19 +37,33 @@
     </licenses>
 
     <scm>
-        <url>git@github.com:bitronix/btm.git</url>
-        <connection>scm:git:git@github.com/bitronix/btm.git</connection>
-        <developerConnection>scm:git:git@github.com:bitronix/btm.git</developerConnection>
+        <url>git@github.com:moqui/bitronix.git</url>
+        <connection>scm:git:git@github.com/moqui/bitronix.git</connection>
+        <developerConnection>scm:git:git@github.com:moqui/bitronix.git</developerConnection>
     </scm>
 
     <developers>
         <developer>
+            <id>taher</id>
+            <name>Taher Alkhateeb</name>
+            <email>taher@pythys.com</email>
+            <roles>
+                <role>Lead Maintainer</role>
+            </roles>
+        </developer>
+        <developer>
             <id>lorban</id>
             <name>Ludovic Orban</name>
+            <roles>
+                <role>Former Maintainer</role>
+            </roles>
         </developer>
         <developer>
             <id>brettwooldridge</id>
             <name>Brett Wooldridge</name>
+            <roles>
+                <role>Original Author</role>
+            </roles>
         </developer>
     </developers>
 
