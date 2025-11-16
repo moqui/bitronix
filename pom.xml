@@ -5,29 +5,24 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>org.moqui</groupId>
     <artifactId>bitronix</artifactId>
     <version>4.0.0-BETA</version>
     <packaging>pom</packaging>
-
     <name>Bitronix Transaction Manager</name>
     <description>
         The Bitronix Transaction Manager (BTM) is a simple but complete implementation of the JTA 1.1 API.
     </description>
     <inceptionYear>2006</inceptionYear>
     <url>https://github.com/moqui/bitronix</url>
-
     <organization>
         <name>moqui</name>
         <url>https://moqui.org</url>
     </organization>
-
     <issueManagement>
         <system>github</system>
         <url>https://github.com/moqui/bitronix/issues</url>
     </issueManagement>
-
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -35,13 +30,11 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-
     <scm>
         <url>git@github.com:moqui/bitronix.git</url>
         <connection>scm:git:git@github.com/moqui/bitronix.git</connection>
         <developerConnection>scm:git:git@github.com:moqui/bitronix.git</developerConnection>
     </scm>
-
     <developers>
         <developer>
             <id>taher</id>
@@ -71,7 +64,6 @@
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
         <surefire.jvm.settings>-Xmx256m</surefire.jvm.settings>
     </properties>
 
@@ -87,35 +79,34 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.codehaus.btm</groupId>
+                <groupId>org.moqui</groupId>
                 <artifactId>btm</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.codehaus.btm</groupId>
+                <groupId>org.moqui</groupId>
                 <artifactId>btm</artifactId>
                 <version>${project.version}</version>
                 <classifier>test-sources</classifier>
             </dependency>
             <dependency>
-                <groupId>org.codehaus.btm</groupId>
+                <groupId>org.moqui</groupId>
                 <artifactId>btm</artifactId>
                 <version>${project.version}</version>
                 <classifier>sources</classifier>
             </dependency>
             <dependency>
-                <groupId>org.codehaus.btm</groupId>
+                <groupId>org.moqui</groupId>
                 <artifactId>btm</artifactId>
                 <version>${project.version}</version>
                 <classifier>javadoc</classifier>
             </dependency>
             <dependency>
-                <groupId>org.codehaus.btm</groupId>
+                <groupId>org.moqui</groupId>
                 <artifactId>btm</artifactId>
                 <type>test-jar</type>
                 <version>${project.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>javax.transaction</groupId>
                 <artifactId>jta</artifactId>
@@ -126,7 +117,6 @@
                 <artifactId>geronimo-jms_1.1_spec</artifactId>
                 <version>1.1.1</version>
             </dependency>
-
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
@@ -157,7 +147,6 @@
                 <artifactId>jetty-plus</artifactId>
                 <version>7.3.0.v20110203</version>
             </dependency>
-
             <dependency>
                 <groupId>javax.inject</groupId>
                 <artifactId>javax.inject</artifactId>
