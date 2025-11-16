@@ -11,6 +11,14 @@ To build this project, you must have JDK17+ installed on your machine.
 
 `./mvnw clean install`
 
+## Linting
+
+check linting issues:
+`./mvnw spotless:check`
+
+fix linting issues:
+`./mvnw spotless:apply`
+
 ## Original Authors
 
 BTM was created and maintained by the Bitronix team, namely:
