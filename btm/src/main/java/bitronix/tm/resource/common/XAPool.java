@@ -193,7 +193,7 @@ public class XAPool<R extends XAResourceHolder<R>, T extends XAStatefulHolder<T>
 
                 return connectionHandle;
             } catch (Exception ex) {
-            	if (log.isDebugEnabled()) { log.debug("connection is invalid, trying to close it", ex); }
+                if (log.isDebugEnabled()) { log.debug("connection is invalid, trying to close it", ex); }
                 try {
                     xaStatefulHolder.close();
                 } catch (Exception ex2) {
@@ -240,8 +240,8 @@ public class XAPool<R extends XAResourceHolder<R>, T extends XAStatefulHolder<T>
         try {
             switch (currentState) {
             case IN_POOL:
-            	// no-op.  calling availablePool.remove(source) here is reduncant because it was
-            	// already removed when availablePool.poll() was called.
+                // no-op.  calling availablePool.remove(source) here is reduncant because it was
+                // already removed when availablePool.poll() was called.
                 break;
             case ACCESSIBLE:
                 if (log.isDebugEnabled()) { log.debug("removed " + source + " from the accessible pool"); }
@@ -264,24 +264,24 @@ public class XAPool<R extends XAResourceHolder<R>, T extends XAStatefulHolder<T>
     public void stateChanged(T source, State oldState, State newState) {
         stateTransitionLock.writeLock().lock();
         try {
-        	switch (newState) {
-        	case IN_POOL:
+            switch (newState) {
+            case IN_POOL:
                 if (log.isDebugEnabled()) { log.debug("added " + source + " to the available pool"); }
                 availablePool.addFirst(source);
-        		break;
-        	case ACCESSIBLE:
-        		if (log.isDebugEnabled()) { log.debug("added " + source + " to the accessible pool"); }
-        		accessiblePool.add(source);
-        		break;
-        	case NOT_ACCESSIBLE:
-        		if (log.isDebugEnabled()) { log.debug("added " + source + " to the inaccessible pool"); }
-        		inaccessiblePool.add(source);
-        		break;
-        	case CLOSED:
+                break;
+            case ACCESSIBLE:
+                if (log.isDebugEnabled()) { log.debug("added " + source + " to the accessible pool"); }
+                accessiblePool.add(source);
+                break;
+            case NOT_ACCESSIBLE:
+                if (log.isDebugEnabled()) { log.debug("added " + source + " to the inaccessible pool"); }
+                inaccessiblePool.add(source);
+                break;
+            case CLOSED:
                 source.removeStateChangeEventListener(this);
                 poolSize.decrementAndGet();
-        		break;
-        	}
+                break;
+            }
         }
         finally {
             stateTransitionLock.writeLock().unlock();
@@ -420,7 +420,7 @@ public class XAPool<R extends XAResourceHolder<R>, T extends XAStatefulHolder<T>
             LocalVisitor xaResourceHolderStateVisitor = new LocalVisitor();
             xaResourceHolder.acceptVisitorForXAResourceHolderStates(currentTxGtrid, xaResourceHolderStateVisitor);
             if (xaResourceHolderStateVisitor.found) {
-            	return true;
+                return true;
             }
         }
         return false;
@@ -437,7 +437,7 @@ public class XAPool<R extends XAResourceHolder<R>, T extends XAStatefulHolder<T>
      */
     private void grow() throws Exception {
         synchronized (poolGrowthShrinkLock) {
-        	final long totalPoolSize = totalPoolSize();
+            final long totalPoolSize = totalPoolSize();
             if (totalPoolSize < bean.getMaxPoolSize()) {
                 long increment = bean.getAcquireIncrement();
                 if (totalPoolSize + increment > bean.getMaxPoolSize()) {
@@ -454,7 +454,7 @@ public class XAPool<R extends XAResourceHolder<R>, T extends XAStatefulHolder<T>
             }
 
             if (totalPoolSize() < bean.getMinPoolSize()) {
-            	growUntilMinPoolSize();
+                growUntilMinPoolSize();
             }
         }
     }
@@ -697,13 +697,13 @@ public class XAPool<R extends XAResourceHolder<R>, T extends XAStatefulHolder<T>
 
     private static final class StatefulHolderThreadLocal<T extends XAStatefulHolder> extends ThreadLocal<T> {
         @Override
-    	public T get() {
-    		return super.get();
-    	}
+        public T get() {
+            return super.get();
+        }
 
-    	@Override
-    	public void set(T value) {
-    		super.set(value);
-    	}
+        @Override
+        public void set(T value) {
+            super.set(value);
+        }
     }
 }

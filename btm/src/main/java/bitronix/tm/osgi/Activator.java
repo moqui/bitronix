@@ -47,38 +47,38 @@ import bitronix.tm.utils.InitializationException;
 
 public class Activator implements BundleActivator {
 
-	private final static Logger log = LoggerFactory.getLogger(Activator.class);
+    private final static Logger log = LoggerFactory.getLogger(Activator.class);
 
     private static final Pattern UNIQUE_NAME = Pattern.compile("^\\s*resource\\.[^\\.]*\\.uniqueName\\s*=\\s*([^\\s]+)\\s*$");
 
     private ServiceRegistration tmRegistration;
-	private ServiceRegistration utRegistration;
-	private Map<String, ServiceRegistration> dsRegistrations;
+    private ServiceRegistration utRegistration;
+    private Map<String, ServiceRegistration> dsRegistrations;
 
     @Override
-	public void start(BundleContext context) throws Exception {
-		dsRegistrations = new HashMap<String, ServiceRegistration>();
+    public void start(BundleContext context) throws Exception {
+        dsRegistrations = new HashMap<String, ServiceRegistration>();
 
-		String configArea = context.getProperty("osgi.configuration.area").replace(" ", "%20");
+        String configArea = context.getProperty("osgi.configuration.area").replace(" ", "%20");
 
         String btmPropFile = System.getProperty("bitronix.tm.configuration", "bitronix-default-config.properties");
 
         URI btmConfig = URI.create(configArea + btmPropFile);
         File cfgFile = new File(btmConfig);
         if (!cfgFile.exists()) {
-        	cfgFile = new File(btmPropFile);
-        	if (!cfgFile.exists()) {
-        		throw new InitializationException("Configuration file not found: " + btmPropFile);
-        	}
+            cfgFile = new File(btmPropFile);
+            if (!cfgFile.exists()) {
+                throw new InitializationException("Configuration file not found: " + btmPropFile);
+            }
         }
 
         FileReader fileReader = new FileReader(cfgFile);
         Properties btmProperties = new Properties();
         try {
-        	btmProperties.load(fileReader);
+            btmProperties.load(fileReader);
         }
         finally {
-        	fileReader.close();
+            fileReader.close();
         }
 
         System.setProperty("bitronix.tm.configuration", cfgFile.getAbsolutePath());
@@ -86,13 +86,13 @@ public class Activator implements BundleActivator {
         File resourceFile = cfgFile;
         String resourcePropFile = btmProperties.getProperty("bitronix.tm.resource.configuration");
         if (resourcePropFile != null) {
-        	URI resourceConfig = URI.create(configArea + resourcePropFile);
-        	resourceFile = new File(resourceConfig);
+            URI resourceConfig = URI.create(configArea + resourcePropFile);
+            resourceFile = new File(resourceConfig);
             if (!resourceFile.exists()) {
-            	resourceFile = new File(resourcePropFile);
-            	if (!resourceFile.exists()) {
-            		throw new InitializationException("Configuration file not found: " + resourcePropFile);
-            	}
+                resourceFile = new File(resourcePropFile);
+                if (!resourceFile.exists()) {
+                    throw new InitializationException("Configuration file not found: " + resourcePropFile);
+                }
             }
             System.setProperty("bitronix.tm.resource.configuration", resourceFile.getAbsolutePath());
         }
@@ -120,11 +120,11 @@ public class Activator implements BundleActivator {
 
         Configuration conf = TransactionManagerServices.getConfiguration();
         log.info(String.format("Started JTA for server ID '%s'.", conf.getServerId()));
-	}
+    }
 
     @Override
-	public void stop(BundleContext context) throws Exception {
-		BitronixTransactionManager tm = TransactionManagerServices.getTransactionManager();
+    public void stop(BundleContext context) throws Exception {
+        BitronixTransactionManager tm = TransactionManagerServices.getTransactionManager();
         tm.shutdown();
 
         tmRegistration.unregister();
@@ -137,9 +137,9 @@ public class Activator implements BundleActivator {
 
         Configuration conf = TransactionManagerServices.getConfiguration();
         log.info(String.format("Stopped JTA for server ID '%s'.", conf.getServerId()));
-	}
+    }
 
-	private Map<String, Integer> rankingOfUniqueNameProperties(File file) throws FileNotFoundException, IOException
+    private Map<String, Integer> rankingOfUniqueNameProperties(File file) throws FileNotFoundException, IOException
     {
         Map<String, Integer> lineNumbers = new HashMap<String, Integer>();
         BufferedReader reader = new BufferedReader(new FileReader(file));

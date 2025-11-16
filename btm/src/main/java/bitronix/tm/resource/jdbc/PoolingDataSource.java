@@ -80,8 +80,8 @@ public class PoolingDataSource extends ResourceBean implements DataSource, XARes
      */
     @Override
     public synchronized void init() {
-    	if (this.pool != null)
-    		return;
+        if (this.pool != null)
+            return;
 
         try {
             buildXAPool();
@@ -229,7 +229,7 @@ public class PoolingDataSource extends ResourceBean implements DataSource, XARes
      * @return cursorHoldability the default cursor holdability.
      */
     public String getCursorHoldability() {
-    	return cursorHoldability;
+        return cursorHoldability;
     }
 
     /**
@@ -237,14 +237,14 @@ public class PoolingDataSource extends ResourceBean implements DataSource, XARes
      * @param cursorHoldability the default cursor holdability.
      */
     public void setCursorHoldability(String cursorHoldability) {
-    	this.cursorHoldability = cursorHoldability;
+        this.cursorHoldability = cursorHoldability;
     }
 
     /**
      * @return localAutoCommit the default local transactions autocommit mode.
      */
     public String getLocalAutoCommit() {
-    	return localAutoCommit;
+        return localAutoCommit;
     }
 
     /**
@@ -252,7 +252,7 @@ public class PoolingDataSource extends ResourceBean implements DataSource, XARes
      * @param localAutoCommit the default local transactions autocommit mode.
      */
     public void setLocalAutoCommit(String localAutoCommit) {
-    	this.localAutoCommit = localAutoCommit;
+        this.localAutoCommit = localAutoCommit;
     }
 
     public void addConnectionCustomizer(ConnectionCustomizer connectionCustomizer) {
@@ -340,7 +340,7 @@ public class PoolingDataSource extends ResourceBean implements DataSource, XARes
     }
 
     @Override
-	public String toString() {
+    public String toString() {
         return "a PoolingDataSource containing " + pool;
     }
 
@@ -482,9 +482,9 @@ public class PoolingDataSource extends ResourceBean implements DataSource, XARes
             return (T) xaDataSource;
         }
         throw new SQLException(getClass().getName() + " is not a wrapper for " + iface);
-	}
+    }
 
-	/* management */
+    /* management */
 
     @Override
     public int getInPoolSize() {
@@ -506,7 +506,7 @@ public class PoolingDataSource extends ResourceBean implements DataSource, XARes
 
     }
 
-	public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
-		throw new SQLFeatureNotSupportedException();
-	}
+    public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
+        throw new SQLFeatureNotSupportedException();
+    }
 }

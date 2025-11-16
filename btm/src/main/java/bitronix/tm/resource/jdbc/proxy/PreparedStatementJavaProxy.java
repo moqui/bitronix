@@ -45,7 +45,7 @@ public class PreparedStatementJavaProxy extends JavaProxyBase<PreparedStatement>
     }
 
     void initialize(JdbcPooledConnection jdbcPooledConnection, PreparedStatement statement, CacheKey cacheKey) {
-    	this.proxy = this;
+        this.proxy = this;
         this.jdbcPooledConnection = jdbcPooledConnection;
         this.delegate = statement;
         this.cacheKey = cacheKey;
@@ -71,8 +71,8 @@ public class PreparedStatementJavaProxy extends JavaProxyBase<PreparedStatement>
             delegate.close();
         }
         else {
-	        // Clear the parameters so the next use of this cached statement
-	        // doesn't pick up unexpected values.
+            // Clear the parameters so the next use of this cached statement
+            // doesn't pick up unexpected values.
             delegate.clearParameters();
             delegate.clearWarnings();
             try {
@@ -91,35 +91,35 @@ public class PreparedStatementJavaProxy extends JavaProxyBase<PreparedStatement>
     }
 
     public ResultSet getResultSet() throws SQLException {
-    	ResultSet resultSet = delegate.getResultSet();
-    	if (resultSet == null) {
-    		return null;
-    	}
-    	return JdbcProxyFactory.INSTANCE.getProxyResultSet(this.getProxy(), resultSet);
+        ResultSet resultSet = delegate.getResultSet();
+        if (resultSet == null) {
+            return null;
+        }
+        return JdbcProxyFactory.INSTANCE.getProxyResultSet(this.getProxy(), resultSet);
     }
 
     public ResultSet executeQuery() throws SQLException {
-    	ResultSet resultSet = delegate.executeQuery();
-    	if (resultSet == null) {
-    		return null;
-    	}
-    	return JdbcProxyFactory.INSTANCE.getProxyResultSet(this.getProxy(), resultSet);
+        ResultSet resultSet = delegate.executeQuery();
+        if (resultSet == null) {
+            return null;
+        }
+        return JdbcProxyFactory.INSTANCE.getProxyResultSet(this.getProxy(), resultSet);
     }
 
     public ResultSet executeQuery(String sql) throws SQLException {
-    	ResultSet resultSet = delegate.executeQuery(sql);
-    	if (resultSet == null) {
-    		return null;
-    	}
-    	return JdbcProxyFactory.INSTANCE.getProxyResultSet(this.getProxy(), resultSet);
+        ResultSet resultSet = delegate.executeQuery(sql);
+        if (resultSet == null) {
+            return null;
+        }
+        return JdbcProxyFactory.INSTANCE.getProxyResultSet(this.getProxy(), resultSet);
     }
 
     public ResultSet getGeneratedKeys() throws SQLException {
-    	ResultSet generatedKeys = delegate.getGeneratedKeys();
-    	if (generatedKeys == null) {
-    		return null;
-    	}
-    	return JdbcProxyFactory.INSTANCE.getProxyResultSet(this.getProxy(), generatedKeys);
+        ResultSet generatedKeys = delegate.getGeneratedKeys();
+        if (generatedKeys == null) {
+            return null;
+        }
+        return JdbcProxyFactory.INSTANCE.getProxyResultSet(this.getProxy(), generatedKeys);
     }
 
     /* java.sql.Wrapper implementation */

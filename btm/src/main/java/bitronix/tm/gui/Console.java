@@ -198,31 +198,31 @@ public class Console extends JFrame {
         RandomAccessFile activeRandomAccessFile = null;
         long timestamp1;
         try {
-	        activeRandomAccessFile = new RandomAccessFile(file1, "r");
-	        int formatId1 = activeRandomAccessFile.readInt();
-	        if (formatId1 != BitronixXid.FORMAT_ID)
-	            throw new IOException("log file 1 " + file1.getName() + " is not a Bitronix Log file (incorrect header)");
-	        timestamp1 = activeRandomAccessFile.readLong();
+            activeRandomAccessFile = new RandomAccessFile(file1, "r");
+            int formatId1 = activeRandomAccessFile.readInt();
+            if (formatId1 != BitronixXid.FORMAT_ID)
+                throw new IOException("log file 1 " + file1.getName() + " is not a Bitronix Log file (incorrect header)");
+            timestamp1 = activeRandomAccessFile.readLong();
         }
         finally {
-        	activeRandomAccessFile.close();
+            activeRandomAccessFile.close();
         }
 
         activeRandomAccessFile = new RandomAccessFile(file2, "r");
         try {
-	        int formatId2 = activeRandomAccessFile.readInt();
-	        if (formatId2 != BitronixXid.FORMAT_ID)
-	            throw new IOException("log file 2 " + file2.getName() + " is not a Bitronix Log file (incorrect header)");
-	        long timestamp2 = activeRandomAccessFile.readLong();
+            int formatId2 = activeRandomAccessFile.readInt();
+            if (formatId2 != BitronixXid.FORMAT_ID)
+                throw new IOException("log file 2 " + file2.getName() + " is not a Bitronix Log file (incorrect header)");
+            long timestamp2 = activeRandomAccessFile.readLong();
 
-	        if (timestamp1 > timestamp2) {
-	            return file1;
-	        } else {
-	            return file2;
-	        }
+            if (timestamp1 > timestamp2) {
+                return file1;
+            } else {
+                return file2;
+            }
         }
         finally {
-        	activeRandomAccessFile.close();
+            activeRandomAccessFile.close();
         }
     }
 

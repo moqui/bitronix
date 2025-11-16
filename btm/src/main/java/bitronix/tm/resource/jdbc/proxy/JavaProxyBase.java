@@ -37,16 +37,16 @@ public abstract class JavaProxyBase<T> implements InvocationHandler {
     protected abstract Map<String, Method> getMethodMap();
 
     @SuppressWarnings("unchecked")
-	protected T getProxy() {
+    protected T getProxy() {
         return (T) proxy;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-    	if (Proxy.isProxyClass(proxy.getClass())) {
-    		this.proxy = (T) proxy;
-    	}
+        if (Proxy.isProxyClass(proxy.getClass())) {
+            this.proxy = (T) proxy;
+        }
 
         try {
             Method ourMethod = getMethodMap().get(getMethodKey(method));

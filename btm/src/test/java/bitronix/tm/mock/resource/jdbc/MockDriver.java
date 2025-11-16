@@ -52,7 +52,7 @@ public class MockDriver implements Driver {
         return new DriverPropertyInfo[0];
     }
     
-	public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
-		throw new SQLFeatureNotSupportedException();
-	}
+    public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
+        throw new SQLFeatureNotSupportedException();
+    }
 }

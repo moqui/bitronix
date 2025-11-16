@@ -38,18 +38,18 @@ import static org.mockito.Mockito.when;
 public class MockConnectionFactory implements ConnectionFactory {
 
     public Connection createConnection() throws JMSException {
-    	Answer<Session> sessionAnswer = new Answer<Session>() {
-			public Session answer(InvocationOnMock invocation) throws Throwable {
-				Session session = mock(Session.class);
-				MessageProducer producer = mock(MessageProducer.class);
-				when(session.createProducer((Destination) any())).thenReturn(producer);
-				return session;
-			}
-    	};
+        Answer<Session> sessionAnswer = new Answer<Session>() {
+            public Session answer(InvocationOnMock invocation) throws Throwable {
+                Session session = mock(Session.class);
+                MessageProducer producer = mock(MessageProducer.class);
+                when(session.createProducer((Destination) any())).thenReturn(producer);
+                return session;
+            }
+        };
 
-    	Connection connection = mock(Connection.class);
-    	when(connection.createSession(anyBoolean(), anyInt())).thenAnswer(sessionAnswer);
-    	return connection;
+        Connection connection = mock(Connection.class);
+        when(connection.createSession(anyBoolean(), anyInt())).thenAnswer(sessionAnswer);
+        return connection;
     }
 
     public Connection createConnection(String jndiName, String jndiName1) throws JMSException {

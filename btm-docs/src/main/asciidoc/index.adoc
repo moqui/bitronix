@@ -10,7 +10,7 @@ BTM 2.1.x is now in maintenance mode and only critical bug fixes are considered.
 == Home of BTM, the Bitronix JTA Transaction Manager
 
 The Bitronix Transaction Manager (BTM) is a simple but complete implementation of the JTA 1.1 API. It is a fully working XA transaction manager that provides all services required by the JTA API while trying to keep the code as simple as possible for easier understanding of the XA semantics.
- 	
+     
 **THE PRIMARY GOAL OF THE BTM PROJECT IS TO MAKE JTA A COMMODITY**
 
 This is BTM's strongest point compared to its competitors: it is trivial to configure and when something goes wrong it is much easier to figure out what to do thanks to the great care placed in useful error reporting and logging.
@@ -38,7 +38,7 @@ link:RecommendedReadings.html[Recommended Readings]
 link:GettingSupport.html[Getting support]
 
 link:WhoUsesBTM.html[Who uses BTM]
- 	
+     
 == Architecture
 
 link:JtaBestPractices.html[JTA Best Practices]
@@ -86,7 +86,7 @@ link:JndiXaConnectionFactory2x.html[XA Connection factories only available from 
 link:LastResourceCommitJms2x.html[Using non-XA servers]
 
 link:CryptResourcePassword2x.html[Password encryption]
-	
+    
 == Integration
 
 === ORM integration

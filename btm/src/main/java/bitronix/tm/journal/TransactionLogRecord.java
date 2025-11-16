@@ -226,18 +226,18 @@ public class TransactionLogRecord implements JournalRecord {
     public int calculateCrc32() {
         int total = 0;
         for (String uniqueName : uniqueNames) {
-        	total += 2 + uniqueName.length(); // 2 bytes for storing the unique name length + unique name length
+            total += 2 + uniqueName.length(); // 2 bytes for storing the unique name length + unique name length
         }
         recordLength = total + getFixedRecordLength();
 
-    	ByteBuffer buf = ByteBuffer.allocate(24 + gtrid.length() + 4 /*uniqueNames.size*/ + total + 4 /*endRecord*/);
-    	buf.putInt(status);              // offset: 0
-    	buf.putInt(recordLength);        // offset: 4
-    	buf.putInt(headerLength);        // offset: 8
-    	buf.putLong(time);               // offset: 12
-    	buf.putInt(sequenceNumber);      // offset: 20
-    	buf.put(gtrid.getArray());       // offset: 24
-    	buf.putInt(uniqueNames.size());  // offset: 24 + gtridArray.length
+        ByteBuffer buf = ByteBuffer.allocate(24 + gtrid.length() + 4 /*uniqueNames.size*/ + total + 4 /*endRecord*/);
+        buf.putInt(status);              // offset: 0
+        buf.putInt(recordLength);        // offset: 4
+        buf.putInt(headerLength);        // offset: 8
+        buf.putLong(time);               // offset: 12
+        buf.putInt(sequenceNumber);      // offset: 20
+        buf.put(gtrid.getArray());       // offset: 24
+        buf.putInt(uniqueNames.size());  // offset: 24 + gtridArray.length
 
         for (String name : uniqueNames) {
             buf.putShort((short) name.length());

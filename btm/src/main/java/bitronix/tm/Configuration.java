@@ -662,8 +662,8 @@ public class Configuration implements Service {
      */
     public Configuration setConservativeJournaling(boolean conservativeJournaling) {
         checkNotStarted();
-    	this.conservativeJournaling = conservativeJournaling;
-    	return this;
+        this.conservativeJournaling = conservativeJournaling;
+        return this;
     }
 
     /**

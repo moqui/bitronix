@@ -188,25 +188,25 @@ public class DiskJournalTest extends TestCase {
     }
 
     public void testRollover() throws Exception {
-    	TransactionManagerServices.getConfiguration().setMaxLogSizeInMb(1);
+        TransactionManagerServices.getConfiguration().setMaxLogSizeInMb(1);
         DiskJournal journal = new DiskJournal();
         journal.open();
 
         List<Uid> uncommitted = new ArrayList<Uid>();
         for (int i = 1; i < 4000; i++) {
-	        Uid gtrid = UidGenerator.generateUid();
-	        journal.log(Status.STATUS_COMMITTING, gtrid, csvToSet("name1,name2,name3"));
+            Uid gtrid = UidGenerator.generateUid();
+            journal.log(Status.STATUS_COMMITTING, gtrid, csvToSet("name1,name2,name3"));
 
-	        if (i < 3600)
-	        {
-		        journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet("name1"));
-		        journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet("name2"));
-		        journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet("name3"));
-	        }
-	        else
-	        {
-	        	uncommitted.add(gtrid);
-	        }
+            if (i < 3600)
+            {
+                journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet("name1"));
+                journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet("name2"));
+                journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet("name3"));
+            }
+            else
+            {
+                uncommitted.add(gtrid);
+            }
         }
 
         Map<Uid, JournalRecord> danglingRecords = journal.collectDanglingRecords();
@@ -214,8 +214,8 @@ public class DiskJournalTest extends TestCase {
 
         for (Uid gtrid : uncommitted) {
             journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet("name1"));
-	        journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet("name2"));
-	        journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet("name3"));
+            journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet("name2"));
+            journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet("name3"));
         }
 
         assertEquals(0, journal.collectDanglingRecords().size());
@@ -277,40 +277,40 @@ public class DiskJournalTest extends TestCase {
         journal.open();
 
         class Runner extends Thread {
-        	private int ndx;
+            private int ndx;
 
-        	Runner(int i) {
-        		this.ndx = i;
-        	}
+            Runner(int i) {
+                this.ndx = i;
+            }
 
-        	@Override
-        	public void run() {
-        		try {
-        			SortedSet<String> set = csvToSet(String.format("%d.name1,%d.name2,%d.name3", ndx, ndx, ndx));
-	        		for (int i = 1; i < 40000; i++) {
-	        			Uid gtrid = UidGenerator.generateUid();
-	        			journal.log(Status.STATUS_COMMITTING, gtrid, set);
+            @Override
+            public void run() {
+                try {
+                    SortedSet<String> set = csvToSet(String.format("%d.name1,%d.name2,%d.name3", ndx, ndx, ndx));
+                    for (int i = 1; i < 40000; i++) {
+                        Uid gtrid = UidGenerator.generateUid();
+                        journal.log(Status.STATUS_COMMITTING, gtrid, set);
                         journal.force();
-	        			
-	        			journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet(ndx + ".name1"));
-	        			journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet(ndx + ".name2"));
-	        			journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet(ndx + ".name3"));
-	        		}
-        		}
-        		catch (IOException io) {
-        			fail(io.getMessage());
-        		}
-        	}
+                        
+                        journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet(ndx + ".name1"));
+                        journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet(ndx + ".name2"));
+                        journal.log(Status.STATUS_COMMITTED, gtrid, csvToSet(ndx + ".name3"));
+                    }
+                }
+                catch (IOException io) {
+                    fail(io.getMessage());
+                }
+            }
         };
 
         Runner[] runners = new Runner[4];
         for (int i = 0; i < 4; i++) {
-        	runners[i] = new Runner(i);
-        	runners[i].start();
+            runners[i] = new Runner(i);
+            runners[i].start();
         }
 
         for (int i = 0; i < 4; i++) {
-        	runners[i].join();
+            runners[i].join();
         }
 
         journal.shutdown();

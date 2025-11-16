@@ -58,7 +58,7 @@ public final class Uid {
     }
 
     public int length() {
-    	return array.length;
+        return array.length;
     }
 
     @Override

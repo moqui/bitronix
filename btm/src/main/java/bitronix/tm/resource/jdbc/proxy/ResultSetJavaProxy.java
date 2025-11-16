@@ -31,15 +31,15 @@ public class ResultSetJavaProxy extends JavaProxyBase<ResultSet> {
     private Statement statement;
 
     public ResultSetJavaProxy(Statement statement, ResultSet resultSet) {
-		initialize(statement, resultSet);
-	}
+        initialize(statement, resultSet);
+    }
 
     public ResultSetJavaProxy() {
-    	// Default constructor
+        // Default constructor
     }
 
     void initialize(Statement statement, ResultSet resultSet) {
-    	this.proxy = this;
+        this.proxy = this;
         this.statement = statement;
         this.delegate = resultSet;
     }
@@ -47,13 +47,13 @@ public class ResultSetJavaProxy extends JavaProxyBase<ResultSet> {
     /* Overridden methods of java.sql.ResultSet */
 
     public Statement getStatement() throws SQLException {
-    	return statement;
+        return statement;
     }
 
     /* Overridden methods of JavaProxyBase */
 
-	@Override
-	protected Map<String, Method> getMethodMap() {
-		return selfMethodMap;
-	}
+    @Override
+    protected Map<String, Method> getMethodMap() {
+        return selfMethodMap;
+    }
 }

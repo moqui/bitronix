@@ -149,7 +149,7 @@ public class TransactionLogHeader {
         buf.putInt(formatId);
         buf.flip();
         while (buf.hasRemaining()) {
-        	fc.write(buf, FORMAT_ID_HEADER + buf.position());
+            fc.write(buf, FORMAT_ID_HEADER + buf.position());
         }
         this.formatId = formatId;
     }
@@ -165,7 +165,7 @@ public class TransactionLogHeader {
         buf.putLong(timestamp);
         buf.flip();
         while (buf.hasRemaining()) {
-        	fc.write(buf, TIMESTAMP_HEADER + buf.position());
+            fc.write(buf, TIMESTAMP_HEADER + buf.position());
         }
         this.timestamp = timestamp;
     }
@@ -181,7 +181,7 @@ public class TransactionLogHeader {
         buf.put(state);
         buf.flip();
         while (buf.hasRemaining()) {
-        	fc.write(buf, STATE_HEADER + buf.position());
+            fc.write(buf, STATE_HEADER + buf.position());
         }
         this.state = state;
     }
@@ -202,7 +202,7 @@ public class TransactionLogHeader {
         buf.putLong(position);
         buf.flip();
         while (buf.hasRemaining()) {
-        	fc.write(buf, CURRENT_POSITION_HEADER + buf.position());
+            fc.write(buf, CURRENT_POSITION_HEADER + buf.position());
         }
 
         this.position = position;

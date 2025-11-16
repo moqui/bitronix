@@ -77,20 +77,20 @@ public class DiskJournal implements Journal, MigratableJournal, ReadableJournal 
      */
     private TransactionLogAppender tla2;
 
-	private final Lock conservativeJournalingLock = new ReentrantLock();
-	private final ReadWriteLock swapForceLock = new ReentrantReadWriteLock(true);
-	private final Object positionLock = new Object();
-	private final AtomicBoolean needsForce;
+    private final Lock conservativeJournalingLock = new ReentrantLock();
+    private final ReadWriteLock swapForceLock = new ReentrantReadWriteLock(true);
+    private final Object positionLock = new Object();
+    private final AtomicBoolean needsForce;
 
-	private final Configuration configuration;
+    private final Configuration configuration;
 
     /**
      * Create an uninitialized disk journal. You must call open() prior you can use it.
      */
     public DiskJournal() {
-    	configuration = TransactionManagerServices.getConfiguration();
-    	needsForce = new AtomicBoolean();
-    	activeTla = new AtomicReference<TransactionLogAppender>();
+        configuration = TransactionManagerServices.getConfiguration();
+        needsForce = new AtomicBoolean();
+        activeTla = new AtomicReference<TransactionLogAppender>();
     }
 
     /**
@@ -118,40 +118,40 @@ public class DiskJournal implements Journal, MigratableJournal, ReadableJournal 
         TransactionLogRecord tlog = new TransactionLogRecord(status, gtrid, uniqueNames);
 
         try {
-        	if (configuration.isConservativeJournaling()) {
-        		conservativeJournalingLock.lock();
-        	}
+            if (configuration.isConservativeJournaling()) {
+                conservativeJournalingLock.lock();
+            }
 
-	        synchronized (positionLock) {
-	        	boolean rollover = activeTla.get().setPositionAndAdvance(tlog);
-	            if (rollover) {
-	                // time to swap log files
+            synchronized (positionLock) {
+                boolean rollover = activeTla.get().setPositionAndAdvance(tlog);
+                if (rollover) {
+                    // time to swap log files
                     swapForceLock.writeLock().lock();
-	                try {
-	                	swapJournalFiles();
-	                	activeTla.get().setPositionAndAdvance(tlog);
-	                }
-	                finally {
-	                	swapForceLock.writeLock().unlock();
-	                }
-	            }
+                    try {
+                        swapJournalFiles();
+                        activeTla.get().setPositionAndAdvance(tlog);
+                    }
+                    finally {
+                        swapForceLock.writeLock().unlock();
+                    }
+                }
 
                 // this read lock MUST be acquired under positionLock
-	        	swapForceLock.readLock().lock();
-	        }
+                swapForceLock.readLock().lock();
+            }
 
-	        try {
-	        	activeTla.get().writeLog(tlog);
-	        	needsForce.set(true);
-	        }
-	        finally {
-	        	swapForceLock.readLock().unlock();
-	        }
+            try {
+                activeTla.get().writeLog(tlog);
+                needsForce.set(true);
+            }
+            finally {
+                swapForceLock.readLock().unlock();
+            }
         }
         finally {
-        	if (configuration.isConservativeJournaling()) {
-        		conservativeJournalingLock.unlock();
-        	}
+            if (configuration.isConservativeJournaling()) {
+                conservativeJournalingLock.unlock();
+            }
         }
     }
 
@@ -166,14 +166,14 @@ public class DiskJournal implements Journal, MigratableJournal, ReadableJournal 
             throw new IOException("cannot force log writing, disk logger is not open");
 
         if (needsForce.get() && configuration.isForcedWriteEnabled()) {
-	        swapForceLock.writeLock().lock();
-	        try {
-	        	activeTla.get().force();
-	        	needsForce.set(false);
-	        }
-	        finally {
-	        	swapForceLock.writeLock().unlock();
-	        }
+            swapForceLock.writeLock().lock();
+            try {
+                activeTla.get().force();
+                needsForce.set(false);
+            }
+            finally {
+                swapForceLock.writeLock().unlock();
+            }
         }
     }
 
@@ -358,11 +358,11 @@ public class DiskJournal implements Journal, MigratableJournal, ReadableJournal 
      */
     private synchronized byte pickActiveJournalFile(TransactionLogAppender tla1, TransactionLogAppender tla2) throws IOException {
         if (tla1.getTimestamp() > tla2.getTimestamp()) {
-        	activeTla.set(tla1);
+            activeTla.set(tla1);
             if (log.isDebugEnabled()) { log.debug("logging to file 1: " + activeTla); }
         }
         else {
-        	activeTla.set(tla2);
+            activeTla.set(tla2);
             if (log.isDebugEnabled()) { log.debug("logging to file 2: " + activeTla); }
         }
 

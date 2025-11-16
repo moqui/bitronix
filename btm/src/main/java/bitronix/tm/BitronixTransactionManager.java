@@ -149,7 +149,7 @@ public class BitronixTransactionManager implements TransactionManager, UserTrans
             throw new BitronixSystemException("cannot start a new transaction, transaction manager is shutting down");
 
         if (log.isDebugEnabled()) {
-        	dumpTransactionContexts();
+            dumpTransactionContexts();
         }
 
         BitronixTransaction currentTx = getCurrentTransaction();
@@ -302,15 +302,15 @@ public class BitronixTransactionManager implements TransactionManager, UserTrans
      */
     public long getOldestInFlightTransactionTimestamp() {
         try {
-        	// The inFlightTransactions map is sorted by timestamp, so the first transaction is always the oldest
-        	BitronixTransaction oldestTransaction = inFlightTransactions.firstKey();
-        	long oldestTimestamp = oldestTransaction.getResourceManager().getGtrid().extractTimestamp();
-        	if (log.isDebugEnabled()) { log.debug("oldest in-flight transaction's timestamp: " + oldestTimestamp); }
-        	return oldestTimestamp;
+            // The inFlightTransactions map is sorted by timestamp, so the first transaction is always the oldest
+            BitronixTransaction oldestTransaction = inFlightTransactions.firstKey();
+            long oldestTimestamp = oldestTransaction.getResourceManager().getGtrid().extractTimestamp();
+            if (log.isDebugEnabled()) { log.debug("oldest in-flight transaction's timestamp: " + oldestTimestamp); }
+            return oldestTimestamp;
 
         } catch (NoSuchElementException e) {
-        	if (log.isDebugEnabled()) { log.debug("oldest in-flight transaction's timestamp: " + Long.MIN_VALUE); }
-        	return Long.MIN_VALUE;
+            if (log.isDebugEnabled()) { log.debug("oldest in-flight transaction's timestamp: " + Long.MIN_VALUE); }
+            return Long.MIN_VALUE;
         }
     }
 
@@ -338,12 +338,12 @@ public class BitronixTransactionManager implements TransactionManager, UserTrans
             return;
 
         // We're using an iterator, so we must synchronize on the collection
-    	synchronized (inFlightTransactions) {
-	        log.debug("dumping " + inFlightTransactions.size() + " transaction context(s)");
-	        for (BitronixTransaction tx : inFlightTransactions.keySet()) {
-	            log.debug(tx.toString());
-	        }
-    	}
+        synchronized (inFlightTransactions) {
+            log.debug("dumping " + inFlightTransactions.size() + " transaction context(s)");
+            for (BitronixTransaction tx : inFlightTransactions.keySet()) {
+                log.debug(tx.toString());
+            }
+        }
     }
 
     /**
@@ -414,8 +414,8 @@ public class BitronixTransactionManager implements TransactionManager, UserTrans
 
         if (txCount > 0) {
             if (log.isDebugEnabled()) {
-            	log.debug("still " + txCount + " in-flight transactions, shutting down anyway");
-            	dumpTransactionContexts();
+                log.debug("still " + txCount + " in-flight transactions, shutting down anyway");
+                dumpTransactionContexts();
             }
         }
         else {
@@ -475,21 +475,21 @@ public class BitronixTransactionManager implements TransactionManager, UserTrans
 
         @Override
         public void afterCompletion(int status) {
-        	ThreadContext context = threadContext.get();
-        	if (context != null) {
-	            if (log.isDebugEnabled()) { log.debug("clearing transaction from thread context: " + context); }
-	            context.clearTransaction();
-        	}
-        	else {
-        		if (log.isDebugEnabled()) { log.debug("thread context was null when clear context synchronization executed"); }
-        	}
+            ThreadContext context = threadContext.get();
+            if (context != null) {
+                if (log.isDebugEnabled()) { log.debug("clearing transaction from thread context: " + context); }
+                context.clearTransaction();
+            }
+            else {
+                if (log.isDebugEnabled()) { log.debug("thread context was null when clear context synchronization executed"); }
+            }
             if (log.isDebugEnabled()) { log.debug("removing transaction from in-flight transactions: " + currentTx); }
             inFlightTransactions.remove(currentTx);
             MDC.remove(MDC_GTRID_KEY);
         }
 
         public void setThreadContext(ThreadContext threadContext) {
-        	this.threadContext.set(threadContext);
+            this.threadContext.set(threadContext);
         }
 
         @Override

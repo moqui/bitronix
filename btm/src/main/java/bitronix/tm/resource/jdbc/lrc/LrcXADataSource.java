@@ -132,7 +132,7 @@ public class LrcXADataSource implements XADataSource {
         return "a JDBC LrcXADataSource on " + driverClassName + " with URL " + url;
     }
     
-	public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
-		throw new SQLFeatureNotSupportedException();
-	}
+    public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
+        throw new SQLFeatureNotSupportedException();
+    }
 }

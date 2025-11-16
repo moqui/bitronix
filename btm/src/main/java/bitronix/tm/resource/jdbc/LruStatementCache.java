@@ -106,18 +106,18 @@ public class LruStatementCache {
      * @return the cached JdbcPreparedStatementHandle statement, or null
      */
     public PreparedStatement get(CacheKey key) {
-    	synchronized (cache) {
+        synchronized (cache) {
             // See LinkedHashMap documentation.  Getting an entry means it is
-	        // updated as the 'youngest' (Most Recently Used) entry.
-	        StatementTracker cached = cache.get(key);
-	        if (cached != null) {
-	            cached.usageCount++;
-	            if (log.isDebugEnabled()) { log.debug("delivered from cache with usage count " + cached.usageCount + " statement <" + key + ">"); }
-	            return cached.statement;
-	        }
+            // updated as the 'youngest' (Most Recently Used) entry.
+            StatementTracker cached = cache.get(key);
+            if (cached != null) {
+                cached.usageCount++;
+                if (log.isDebugEnabled()) { log.debug("delivered from cache with usage count " + cached.usageCount + " statement <" + key + ">"); }
+                return cached.statement;
+            }
 
-	        return null;
-    	}
+            return null;
+        }
     }
 
     /**
@@ -131,39 +131,39 @@ public class LruStatementCache {
      * @return a prepared statement
      */
     public PreparedStatement put(CacheKey key, PreparedStatement statement) {
-    	if (clearInProgress.get())
-    	{
-    		return null;
-    	}
+        if (clearInProgress.get())
+        {
+            return null;
+        }
 
-    	synchronized (cache) {
+        synchronized (cache) {
             if (maxSize < 1) {
-	            return null;
-	        }
+                return null;
+            }
 
-	        // See LinkedHashMap documentation.  Getting an entry means it is
-	        // updated as the 'youngest' (Most Recently Used) entry.
-	        StatementTracker cached = cache.get(key);
-	        if (cached == null) {
-	            if (log.isDebugEnabled()) { log.debug("adding to cache statement <" + key + ">"); }
-	            cache.put(key, new StatementTracker(statement));
-	            size++;
-	        } else {
-	            cached.usageCount--;
-	            statement = cached.statement;
-	            if (log.isDebugEnabled()) { log.debug("returning to cache statement <" + key + "> with usage count " + cached.usageCount); }
-	        }
+            // See LinkedHashMap documentation.  Getting an entry means it is
+            // updated as the 'youngest' (Most Recently Used) entry.
+            StatementTracker cached = cache.get(key);
+            if (cached == null) {
+                if (log.isDebugEnabled()) { log.debug("adding to cache statement <" + key + ">"); }
+                cache.put(key, new StatementTracker(statement));
+                size++;
+            } else {
+                cached.usageCount--;
+                statement = cached.statement;
+                if (log.isDebugEnabled()) { log.debug("returning to cache statement <" + key + "> with usage count " + cached.usageCount); }
+            }
 
-	        // If the size is exceeded, we will _try_ to evict one (or more)
-	        // statements until the max level is again reached.  However, if
-	        // every statement in the cache is 'in use', the size of the cache
-	        // is not reduced.  Eventually the cache will be reduced, no worries.
-	        if (size > maxSize) {
-	            tryEviction();
-	        }
+            // If the size is exceeded, we will _try_ to evict one (or more)
+            // statements until the max level is again reached.  However, if
+            // every statement in the cache is 'in use', the size of the cache
+            // is not reduced.  Eventually the cache will be reduced, no worries.
+            if (size > maxSize) {
+                tryEviction();
+            }
 
-	        return statement;
-    	}
+            return statement;
+        }
     }
 
     public void addEvictionListener(LruEvictionListener<PreparedStatement> listener) {
@@ -179,25 +179,25 @@ public class LruStatementCache {
      * connection close.
      */
     protected void clear() {
-    	if (clearInProgress.compareAndSet(false, true)) {
-    		try {
-		    	synchronized (cache) {
-			        Iterator<Entry<CacheKey, StatementTracker>> it = cache.entrySet().iterator();
-			        while (it.hasNext()) {
-			            Entry<CacheKey, StatementTracker> entry = it.next();
-			            StatementTracker tracker = entry.getValue();
-			            it.remove();
-			            fireEvictionEvent(tracker.statement);
-			        }
-			        cache.clear();
-			        size = 0;
-		    	}
-    		}
-    		finally
-    		{
-    			clearInProgress.set(false);
-    		}
-    	}
+        if (clearInProgress.compareAndSet(false, true)) {
+            try {
+                synchronized (cache) {
+                    Iterator<Entry<CacheKey, StatementTracker>> it = cache.entrySet().iterator();
+                    while (it.hasNext()) {
+                        Entry<CacheKey, StatementTracker> entry = it.next();
+                        StatementTracker tracker = entry.getValue();
+                        it.remove();
+                        fireEvictionEvent(tracker.statement);
+                    }
+                    cache.clear();
+                    size = 0;
+                }
+            }
+            finally
+            {
+                clearInProgress.set(false);
+            }
+        }
     }
 
     /**
@@ -207,9 +207,9 @@ public class LruStatementCache {
      */
     private void tryEviction() {
         // Iteration order of the LinkedHashMap is from LRU to MRU
-    	Iterator<Entry<CacheKey, StatementTracker>> it = cache.entrySet().iterator();
+        Iterator<Entry<CacheKey, StatementTracker>> it = cache.entrySet().iterator();
         while (it.hasNext()) {
-        	Entry<CacheKey, StatementTracker> entry = it.next();
+            Entry<CacheKey, StatementTracker> entry = it.next();
             StatementTracker tracker = entry.getValue();
             if (tracker.usageCount == 0) {
                 it.remove();

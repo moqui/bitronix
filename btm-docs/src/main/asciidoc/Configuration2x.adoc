@@ -78,7 +78,7 @@ See also https://github.com/bitronix/btm/blob/master/btm/src/main/java/bitronix/
 |warnAboutZeroResourceTransaction
 |true
 |Should transactions executed without a single enlisted resource result in a warning or not? Most of the time transactions executed with no enlisted resource reflect a bug or a mis-configuration somewhere.
-|bitronix.tm.2pc.debugZeroResourceTransactions	debugZeroResourceTransaction	false	Should creation and commit call stacks of transactions executed without a single enlisted resource tracked and logged or not? This is a companion to `warnAboutZeroResourceTransaction` where the transaction creation and commit call stacks could help you identify the culprit code.
+|bitronix.tm.2pc.debugZeroResourceTransactions    debugZeroResourceTransaction    false    Should creation and commit call stacks of transactions executed without a single enlisted resource tracked and logged or not? This is a companion to `warnAboutZeroResourceTransaction` where the transaction creation and commit call stacks could help you identify the culprit code.
 |bitronix.tm.disableJmx
 |disableJmx
 |false
@@ -87,7 +87,7 @@ See also https://github.com/bitronix/btm/blob/master/btm/src/main/java/bitronix/
 |jndiUserTransactionName
 |java:comp/UserTransaction
 |The name under which the transaction manager will be bound in the internal JNDI provider.
-|bitronix.tm.allowMultipleLrc	allowMultipleLrc	false	Should the transaction manager allow multiple LRC resources to be enlisted into the same transaction? Having multiple LRC resources participate in a transaction gives up the recovery guarantee but sometimes is useful in development mode.
+|bitronix.tm.allowMultipleLrc    allowMultipleLrc    false    Should the transaction manager allow multiple LRC resources to be enlisted into the same transaction? Having multiple LRC resources participate in a transaction gives up the recovery guarantee but sometimes is useful in development mode.
 |bitronix.tm.currentNodeOnlyRecovery
 |currentNodeOnlyRecovery
 |true

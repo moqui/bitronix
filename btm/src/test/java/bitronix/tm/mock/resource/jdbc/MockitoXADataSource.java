@@ -99,22 +99,22 @@ public class MockitoXADataSource implements XADataSource {
         // Handle XAConnection.close(), first time we answer, after that we throw
         doAnswer(new Answer<Object>() {
             @Override
-			public Object answer(InvocationOnMock invocation) throws Throwable {
-				EventRecorder eventRecorder = EventRecorder.getEventRecorder(mockXAConnection);
-				eventRecorder.addEvent(new XAConnectionCloseEvent(mockXAConnection));
-				return null;
-			}
-		}).doThrow(new SQLException("XAConnection is already closed")).when(mockXAConnection).close();
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                EventRecorder eventRecorder = EventRecorder.getEventRecorder(mockXAConnection);
+                eventRecorder.addEvent(new XAConnectionCloseEvent(mockXAConnection));
+                return null;
+            }
+        }).doThrow(new SQLException("XAConnection is already closed")).when(mockXAConnection).close();
 
         when(mockXAConnection.getXAResource()).thenReturn(xaResource);
 //        Connection mockConnection = createMockConnection();
 //        when(mockXAConnection.getConnection()).thenReturn(mockConnection);
         doAnswer(new Answer<Connection>() {
             @Override
-			public Connection answer(InvocationOnMock invocation) throws Throwable {
-				return createMockConnection();
-			}
-		}).when(mockXAConnection).getConnection();
+            public Connection answer(InvocationOnMock invocation) throws Throwable {
+                return createMockConnection();
+            }
+        }).when(mockXAConnection).getConnection();
 
         if (staticCloseXAConnectionException != null)
             doThrow(staticCloseXAConnectionException).when(mockXAConnection).close();
@@ -223,31 +223,31 @@ public class MockitoXADataSource implements XADataSource {
         // Handle Connection.close()
         doAnswer(new Answer() {
             @Override
-			public Object answer(InvocationOnMock invocation) throws Throwable {
-				EventRecorder eventRecorder = EventRecorder.getEventRecorder(mockConnection);
-				eventRecorder.addEvent(new ConnectionCloseEvent(mockConnection));
-				return null;
-			}
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                EventRecorder eventRecorder = EventRecorder.getEventRecorder(mockConnection);
+                eventRecorder.addEvent(new ConnectionCloseEvent(mockConnection));
+                return null;
+            }
         }).doThrow(new SQLException("Connection is already closed")).when(mockConnection).close();
 
         // Handle Connection.commit()
         doAnswer(new Answer() {
             @Override
-			public Object answer(InvocationOnMock invocation) throws Throwable {
-				EventRecorder eventRecorder = EventRecorder.getEventRecorder(mockConnection);
-				eventRecorder.addEvent(new LocalCommitEvent(mockConnection, new Exception()));
-				return null;
-			}
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                EventRecorder eventRecorder = EventRecorder.getEventRecorder(mockConnection);
+                eventRecorder.addEvent(new LocalCommitEvent(mockConnection, new Exception()));
+                return null;
+            }
         }).doThrow(new SQLException("Transaction already commited")).when(mockConnection).commit();
 
         // Handle Connection.rollback()
         doAnswer(new Answer() {
             @Override
-			public Object answer(InvocationOnMock invocation) throws Throwable {
-				EventRecorder eventRecorder = EventRecorder.getEventRecorder(mockConnection);
-				eventRecorder.addEvent(new LocalRollbackEvent(mockConnection, new Exception()));
-				return null;
-			}
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                EventRecorder eventRecorder = EventRecorder.getEventRecorder(mockConnection);
+                eventRecorder.addEvent(new LocalRollbackEvent(mockConnection, new Exception()));
+                return null;
+            }
         }).doThrow(new SQLException("Transaction already rolledback")).when(mockConnection).rollback();
 
         return mockConnection;
@@ -288,7 +288,7 @@ public class MockitoXADataSource implements XADataSource {
         };
     }
     
-	public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
-		throw new SQLFeatureNotSupportedException();
-	}
+    public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
+        throw new SQLFeatureNotSupportedException();
+    }
 }

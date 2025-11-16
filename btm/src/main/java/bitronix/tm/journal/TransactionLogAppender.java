@@ -57,10 +57,10 @@ public class TransactionLogAppender {
     private final FileChannel fc;
     private final FileLock lock;
     private final TransactionLogHeader header;
-	private final long maxFileLength;
-	private final AtomicInteger outstandingWrites;
-	private final HashMap<Uid, Set<String>> danglingRecords;
-	private long position;
+    private final long maxFileLength;
+    private final AtomicInteger outstandingWrites;
+    private final HashMap<Uid, Set<String>> danglingRecords;
+    private long position;
 
     /**
      * Create an appender that will write to specified file up to the specified maximum length.
@@ -99,16 +99,16 @@ public class TransactionLogAppender {
      */
     protected boolean setPositionAndAdvance(TransactionLogRecord tlog) throws IOException {
         int tlogSize = tlog.calculateTotalRecordSize();
-    	if (position + tlogSize > maxFileLength) {
-    		return true;
-    	}
+        if (position + tlogSize > maxFileLength) {
+            return true;
+        }
 
-    	long writePosition = position;
-    	position += tlogSize;
-    	tlog.setWritePosition(writePosition);
+        long writePosition = position;
+        position += tlogSize;
+        tlog.setWritePosition(writePosition);
 
-    	outstandingWrites.incrementAndGet();
-    	return false;
+        outstandingWrites.incrementAndGet();
+        return false;
     }
 
     /**
@@ -121,7 +121,7 @@ public class TransactionLogAppender {
             int status = tlog.getStatus();
             Uid gtrid = tlog.getGtrid();
 
-        	int recordSize = tlog.calculateTotalRecordSize();
+            int recordSize = tlog.calculateTotalRecordSize();
             ByteBuffer buf = ByteBuffer.allocate(recordSize);
             buf.putInt(tlog.getStatus());
             buf.putInt(tlog.getRecordLength());
@@ -144,42 +144,42 @@ public class TransactionLogAppender {
 
             final long writePosition = tlog.getWritePosition();
             while (buf.hasRemaining()) {
-            	fc.write(buf, writePosition + buf.position());
+                fc.write(buf, writePosition + buf.position());
             }
 
             trackOutstanding(status, gtrid, uniqueNames);
         }
         finally {
-        	if (outstandingWrites.decrementAndGet() == 0) {
-        		header.setPosition(position);
-        	}
+            if (outstandingWrites.decrementAndGet() == 0) {
+                header.setPosition(position);
+            }
         }
     }
 
     protected List<TransactionLogRecord> getDanglingLogs() {
-    	synchronized (danglingRecords) {
-	        List<Uid> sortedUids = new ArrayList<Uid>(danglingRecords.keySet());
-	        Collections.sort(sortedUids, new Comparator<Uid>() {
+        synchronized (danglingRecords) {
+            List<Uid> sortedUids = new ArrayList<Uid>(danglingRecords.keySet());
+            Collections.sort(sortedUids, new Comparator<Uid>() {
                 @Override
-	            public int compare(Uid uid1, Uid uid2) {
-	                return Integer.valueOf(uid1.extractSequence()).compareTo(uid2.extractSequence());
-	            }
-	        });
+                public int compare(Uid uid1, Uid uid2) {
+                    return Integer.valueOf(uid1.extractSequence()).compareTo(uid2.extractSequence());
+                }
+            });
 
-	        List<TransactionLogRecord> outstandingLogs = new ArrayList<TransactionLogRecord>(danglingRecords.size());
-	        for (Uid uid : sortedUids) {
-	            Set<String> uniqueNames = danglingRecords.get(uid);
-	            outstandingLogs.add(new TransactionLogRecord(Status.STATUS_COMMITTING, uid, uniqueNames));
-	        }
+            List<TransactionLogRecord> outstandingLogs = new ArrayList<TransactionLogRecord>(danglingRecords.size());
+            for (Uid uid : sortedUids) {
+                Set<String> uniqueNames = danglingRecords.get(uid);
+                outstandingLogs.add(new TransactionLogRecord(Status.STATUS_COMMITTING, uid, uniqueNames));
+            }
 
-	        return outstandingLogs;
-    	}
+            return outstandingLogs;
+        }
     }
 
     protected void clearDanglingLogs() {
-    	synchronized (danglingRecords) {
-    		danglingRecords.clear();
-    	}
+        synchronized (danglingRecords) {
+            danglingRecords.clear();
+        }
     }
 
     /**
@@ -192,31 +192,31 @@ public class TransactionLogAppender {
      * @param uniqueNames the set of uniquely named resources
      */
     private void trackOutstanding(int status, Uid gtrid, Set<String> uniqueNames) {
-    	if (uniqueNames.isEmpty()) {
-    		return;
-    	}
+        if (uniqueNames.isEmpty()) {
+            return;
+        }
 
         switch (status) {
             case Status.STATUS_COMMITTING: {
-            	synchronized (danglingRecords) {
-            		Set<String> outstanding = danglingRecords.get(gtrid);
-            		if (outstanding == null) {
-            			outstanding = new TreeSet<String>(uniqueNames);
-            			danglingRecords.put(gtrid, outstanding);
-            		}
-            		outstanding.addAll(uniqueNames);
-            	}
+                synchronized (danglingRecords) {
+                    Set<String> outstanding = danglingRecords.get(gtrid);
+                    if (outstanding == null) {
+                        outstanding = new TreeSet<String>(uniqueNames);
+                        danglingRecords.put(gtrid, outstanding);
+                    }
+                    outstanding.addAll(uniqueNames);
+                }
                 break;
             }
             case Status.STATUS_ROLLEDBACK:
             case Status.STATUS_COMMITTED:
             case Status.STATUS_UNKNOWN: {
-            	synchronized (danglingRecords) {
-	                Set<String> outstanding = danglingRecords.get(gtrid);
-	                if (outstanding != null && outstanding.removeAll(uniqueNames) && outstanding.isEmpty()) {
-	                    danglingRecords.remove(gtrid);
-	                }
-            	}
+                synchronized (danglingRecords) {
+                    Set<String> outstanding = danglingRecords.get(gtrid);
+                    if (outstanding != null && outstanding.removeAll(uniqueNames) && outstanding.isEmpty()) {
+                        danglingRecords.remove(gtrid);
+                    }
+                }
                 break;
             }
         }
@@ -236,7 +236,7 @@ public class TransactionLogAppender {
      * @return the log file header timestamp
      */
     long getTimestamp() {
-    	return header.getTimestamp();
+        return header.getTimestamp();
     }
 
     /**
@@ -245,7 +245,7 @@ public class TransactionLogAppender {
      * @throws IOException if an I/O error occurs
      */
     void setTimestamp(long timestamp) throws IOException {
-    	header.setTimestamp(timestamp);
+        header.setTimestamp(timestamp);
     }
 
     /**
@@ -262,7 +262,7 @@ public class TransactionLogAppender {
      * @throws IOException if an I/O error occurs.
      */
     public void setState(byte state) throws IOException {
-    	header.setState(state);
+        header.setState(state);
     }
 
     /**
@@ -270,7 +270,7 @@ public class TransactionLogAppender {
      * @return the file position
      */
     public long getPosition() {
-    	return position;
+        return position;
     }
 
 
@@ -282,7 +282,7 @@ public class TransactionLogAppender {
         header.setState(TransactionLogHeader.CLEAN_LOG_STATE);
         fc.force(false);
         if (lock != null)
-        	lock.release();
+            lock.release();
         fc.close();
         randomeAccessFile.close();
     }

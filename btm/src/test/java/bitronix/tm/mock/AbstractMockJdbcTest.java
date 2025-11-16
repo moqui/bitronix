@@ -110,7 +110,7 @@ public abstract class AbstractMockJdbcTest extends TestCase {
     private void registerPoolEventListener(XAPool<JdbcPooledConnection, JdbcPooledConnection> pool) throws Exception {
         Iterator<JdbcPooledConnection> iterator = pool.getXAResourceHolders().iterator();
         while (iterator.hasNext()) {
-        	JdbcPooledConnection jdbcPooledConnection = iterator.next();
+            JdbcPooledConnection jdbcPooledConnection = iterator.next();
             jdbcPooledConnection.addStateChangeEventListener(new StateChangeListener<JdbcPooledConnection>() {
                 @Override
                 public void stateChanged(JdbcPooledConnection source, State oldState, State newState) {

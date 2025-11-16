@@ -24,9 +24,9 @@ import junit.framework.TestCase;
 public class CryptoEngineTest extends TestCase {
 
     public void testCrypt() throws Exception {
-    	String textToCrypt = "java";
+        String textToCrypt = "java";
 
-    	String cypherText = CryptoEngine.crypt("DES", textToCrypt);
+        String cypherText = CryptoEngine.crypt("DES", textToCrypt);
         String decryptedText = CryptoEngine.decrypt("DES", cypherText);
 
         assertEquals(textToCrypt, decryptedText);

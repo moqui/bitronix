@@ -53,38 +53,38 @@ public class MockXAConnectionFactory implements XAConnectionFactory {
         if (staticCreateXAConnectionException != null)
             throw staticCreateXAConnectionException;
 
-    	Answer xaSessionAnswer = new Answer<XASession>() {
-    		public XASession answer(InvocationOnMock invocation)throws Throwable {
-    			XASession mockXASession = mock(XASession.class);
-    			MessageProducer messageProducer = mock(MessageProducer.class);
+        Answer xaSessionAnswer = new Answer<XASession>() {
+            public XASession answer(InvocationOnMock invocation)throws Throwable {
+                XASession mockXASession = mock(XASession.class);
+                MessageProducer messageProducer = mock(MessageProducer.class);
                 when(mockXASession.createProducer((Destination) any())).thenReturn(messageProducer);
-    	    	MessageConsumer messageConsumer = mock(MessageConsumer.class);
-    	    	when(mockXASession.createConsumer((Destination) any())).thenReturn(messageConsumer);
-    	    	when(mockXASession.createConsumer((Destination) any(), anyString())).thenReturn(messageConsumer);
-    	    	when(mockXASession.createConsumer((Destination) any(), anyString(), anyBoolean())).thenReturn(messageConsumer);
-    	    	Queue queue = mock(Queue.class);
-    	    	when(mockXASession.createQueue(anyString())).thenReturn(queue);
-    	    	Topic topic = mock(Topic.class);
-    	    	when(mockXASession.createTopic(anyString())).thenReturn(topic);
-    	    	MockXAResource mockXAResource = new MockXAResource(null);
-    			when(mockXASession.getXAResource()).thenReturn(mockXAResource);    			
-    	    	Answer<Session> sessionAnswer = new Answer<Session>() {
-    				public Session answer(InvocationOnMock invocation) throws Throwable {
-    					Session session = mock(Session.class);
-    					MessageProducer producer = mock(MessageProducer.class);
-    					when(session.createProducer((Destination) any())).thenReturn(producer);
-    					return session;
-    				}
-    	    	};
-    			when(mockXASession.getSession()).thenAnswer(sessionAnswer);
-    			
-    			return mockXASession;
-    		}
-    	};
+                MessageConsumer messageConsumer = mock(MessageConsumer.class);
+                when(mockXASession.createConsumer((Destination) any())).thenReturn(messageConsumer);
+                when(mockXASession.createConsumer((Destination) any(), anyString())).thenReturn(messageConsumer);
+                when(mockXASession.createConsumer((Destination) any(), anyString(), anyBoolean())).thenReturn(messageConsumer);
+                Queue queue = mock(Queue.class);
+                when(mockXASession.createQueue(anyString())).thenReturn(queue);
+                Topic topic = mock(Topic.class);
+                when(mockXASession.createTopic(anyString())).thenReturn(topic);
+                MockXAResource mockXAResource = new MockXAResource(null);
+                when(mockXASession.getXAResource()).thenReturn(mockXAResource);                
+                Answer<Session> sessionAnswer = new Answer<Session>() {
+                    public Session answer(InvocationOnMock invocation) throws Throwable {
+                        Session session = mock(Session.class);
+                        MessageProducer producer = mock(MessageProducer.class);
+                        when(session.createProducer((Destination) any())).thenReturn(producer);
+                        return session;
+                    }
+                };
+                when(mockXASession.getSession()).thenAnswer(sessionAnswer);
+                
+                return mockXASession;
+            }
+        };
 
-    	XAConnection mockXAConnection = mock(XAConnection.class);
-    	when(mockXAConnection.createXASession()).thenAnswer(xaSessionAnswer);
-    	when(mockXAConnection.createSession(anyBoolean(), anyInt())).thenAnswer(xaSessionAnswer);
+        XAConnection mockXAConnection = mock(XAConnection.class);
+        when(mockXAConnection.createXASession()).thenAnswer(xaSessionAnswer);
+        when(mockXAConnection.createSession(anyBoolean(), anyInt())).thenAnswer(xaSessionAnswer);
         if (staticCloseXAConnectionException != null)
             doThrow(staticCloseXAConnectionException).when(mockXAConnection).close();
 
