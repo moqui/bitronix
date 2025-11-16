@@ -46,15 +46,15 @@
             </roles>
         </developer>
         <developer>
-            <id>lorban</id>
-            <name>Ludovic Orban</name>
+            <id>brettwooldridge</id>
+            <name>Brett Wooldridge</name>
             <roles>
                 <role>Former Maintainer</role>
             </roles>
         </developer>
         <developer>
-            <id>brettwooldridge</id>
-            <name>Brett Wooldridge</name>
+            <id>lorban</id>
+            <name>Ludovic Orban</name>
             <roles>
                 <role>Original Author</role>
             </roles>
