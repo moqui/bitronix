@@ -240,25 +240,4 @@
         </pluginManagement>
     </build>
 
-    <profiles>
-        <profile>
-            <id>dist</id>
-            <modules>
-                <module>btm-dist</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>java6</id>
-            <properties>
-                <java.version>1.6</java.version>
-            </properties>
-        </profile>
-        <profile>
-            <id>java7</id>
-            <properties>
-                <java.version>1.7</java.version>
-            </properties>
-        </profile>
-    </profiles>
-
 </project>
