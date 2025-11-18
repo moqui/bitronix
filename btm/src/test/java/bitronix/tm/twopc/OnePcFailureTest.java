@@ -35,8 +35,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.XAConnection;
-import javax.transaction.RollbackException;
-import javax.transaction.Status;
+import jakarta.transaction.RollbackException;
+import jakarta.transaction.Status;
 import javax.transaction.xa.XAException;
 import java.lang.reflect.Field;
 import java.sql.Connection;

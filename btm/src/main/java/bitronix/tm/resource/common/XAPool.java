@@ -28,7 +28,7 @@ import bitronix.tm.utils.Uid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.transaction.Synchronization;
+import jakarta.transaction.Synchronization;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;

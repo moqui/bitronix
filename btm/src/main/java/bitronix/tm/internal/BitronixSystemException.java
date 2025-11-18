@@ -15,10 +15,10 @@
  */
 package bitronix.tm.internal;
 
-import javax.transaction.SystemException;
+import jakarta.transaction.SystemException;
 
 /**
- * Subclass of {@link javax.transaction.SystemException} supporting nested {@link Throwable}s.
+ * Subclass of {@link jakarta.transaction.SystemException} supporting nested {@link Throwable}s.
  *
  * @author Ludovic Orban
  */

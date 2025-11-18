@@ -20,7 +20,7 @@ import bitronix.tm.utils.Uid;
 import bitronix.tm.utils.UidGenerator;
 import junit.framework.TestCase;
 
-import javax.transaction.Status;
+import jakarta.transaction.Status;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

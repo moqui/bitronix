@@ -21,7 +21,7 @@ import bitronix.tm.resource.jdbc.PooledConnectionProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.transaction.Transaction;
+import jakarta.transaction.Transaction;
 import java.sql.Connection;
 import java.util.ArrayList;
 

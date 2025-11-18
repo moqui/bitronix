@@ -30,7 +30,7 @@ import javax.jms.Connection;
 import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.Session;
-import javax.transaction.Status;
+import jakarta.transaction.Status;
 import javax.transaction.xa.XAResource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

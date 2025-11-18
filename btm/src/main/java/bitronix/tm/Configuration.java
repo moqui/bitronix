@@ -518,9 +518,9 @@ public class Configuration implements Service {
     }
 
     /**
-     * Get the name the {@link javax.transaction.UserTransaction} should be bound under in the
+     * Get the name the {@link jakarta.transaction.UserTransaction} should be bound under in the
      * {@link bitronix.tm.jndi.BitronixContext}.
-     * @return the name the {@link javax.transaction.UserTransaction} should
+     * @return the name the {@link jakarta.transaction.UserTransaction} should
      *         be bound under in the {@link bitronix.tm.jndi.BitronixContext}.
      */
     public String getJndiUserTransactionName() {
@@ -528,10 +528,10 @@ public class Configuration implements Service {
     }
 
     /**
-     * Set the name the {@link javax.transaction.UserTransaction} should be bound under in the
+     * Set the name the {@link jakarta.transaction.UserTransaction} should be bound under in the
      * {@link bitronix.tm.jndi.BitronixContext}.
      * @see #getJndiUserTransactionName()
-     * @param jndiUserTransactionName the name the {@link javax.transaction.UserTransaction} should
+     * @param jndiUserTransactionName the name the {@link jakarta.transaction.UserTransaction} should
      *        be bound under in the {@link bitronix.tm.jndi.BitronixContext}.
      * @return this.
      */
@@ -542,9 +542,9 @@ public class Configuration implements Service {
     }
 
     /**
-     * Get the name the {@link javax.transaction.TransactionSynchronizationRegistry} should be bound under in the
+     * Get the name the {@link jakarta.transaction.TransactionSynchronizationRegistry} should be bound under in the
      * {@link bitronix.tm.jndi.BitronixContext}.
-     * @return the name the {@link javax.transaction.TransactionSynchronizationRegistry} should
+     * @return the name the {@link jakarta.transaction.TransactionSynchronizationRegistry} should
      *         be bound under in the {@link bitronix.tm.jndi.BitronixContext}.
      */
     public String getJndiTransactionSynchronizationRegistryName() {
@@ -552,10 +552,10 @@ public class Configuration implements Service {
     }
 
     /**
-     * Set the name the {@link javax.transaction.TransactionSynchronizationRegistry} should be bound under in the
+     * Set the name the {@link jakarta.transaction.TransactionSynchronizationRegistry} should be bound under in the
      * {@link bitronix.tm.jndi.BitronixContext}.
      * @see #getJndiUserTransactionName()
-     * @param jndiTransactionSynchronizationRegistryName the name the {@link javax.transaction.TransactionSynchronizationRegistry} should
+     * @param jndiTransactionSynchronizationRegistryName the name the {@link jakarta.transaction.TransactionSynchronizationRegistry} should
      *        be bound under in the {@link bitronix.tm.jndi.BitronixContext}.
      * @return this.
      */

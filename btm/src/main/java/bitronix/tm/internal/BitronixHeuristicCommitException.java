@@ -15,10 +15,10 @@
  */
 package bitronix.tm.internal;
 
-import javax.transaction.HeuristicCommitException;
+import jakarta.transaction.HeuristicCommitException;
 
 /**
- * Subclass of {@link javax.transaction.HeuristicCommitException} supporting nested {@link Throwable}s.
+ * Subclass of {@link jakarta.transaction.HeuristicCommitException} supporting nested {@link Throwable}s.
  *
  * @author Ludovic Orban
  */

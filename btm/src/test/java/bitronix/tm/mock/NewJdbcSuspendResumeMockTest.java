@@ -30,9 +30,9 @@ import bitronix.tm.mock.events.XAResourceStartEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.transaction.InvalidTransactionException;
-import javax.transaction.Status;
-import javax.transaction.Transaction;
+import jakarta.transaction.InvalidTransactionException;
+import jakarta.transaction.Status;
+import jakarta.transaction.Transaction;
 import javax.transaction.xa.XAResource;
 import java.sql.Connection;
 import java.sql.SQLException;

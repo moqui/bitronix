@@ -25,7 +25,7 @@ import bitronix.tm.utils.Uid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.transaction.Status;
+import jakarta.transaction.Status;
 import javax.transaction.xa.XAException;
 import java.io.IOException;
 import java.util.HashSet;

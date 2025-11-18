@@ -39,7 +39,7 @@ import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.transaction.Status;
+import jakarta.transaction.Status;
 import javax.transaction.xa.XAResource;
 import javax.transaction.xa.Xid;
 import java.io.File;

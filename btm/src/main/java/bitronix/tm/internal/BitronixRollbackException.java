@@ -15,10 +15,10 @@
  */
 package bitronix.tm.internal;
 
-import javax.transaction.RollbackException;
+import jakarta.transaction.RollbackException;
 
 /**
- * Subclass of {@link javax.transaction.RollbackException} supporting nested {@link Throwable}s.
+ * Subclass of {@link jakarta.transaction.RollbackException} supporting nested {@link Throwable}s.
  *
  * @author Ludovic Orban
  */

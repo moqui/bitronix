@@ -30,9 +30,9 @@ import bitronix.tm.utils.Decoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.Status;
+import jakarta.transaction.HeuristicMixedException;
+import jakarta.transaction.HeuristicRollbackException;
+import jakarta.transaction.Status;
 import javax.transaction.xa.XAException;
 import java.util.ArrayList;
 import java.util.Collections;

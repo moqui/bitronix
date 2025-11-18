@@ -44,14 +44,14 @@ import bitronix.tm.utils.UidGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.transaction.HeuristicCommitException;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.RollbackException;
-import javax.transaction.Status;
-import javax.transaction.Synchronization;
-import javax.transaction.SystemException;
-import javax.transaction.Transaction;
+import jakarta.transaction.HeuristicCommitException;
+import jakarta.transaction.HeuristicMixedException;
+import jakarta.transaction.HeuristicRollbackException;
+import jakarta.transaction.RollbackException;
+import jakarta.transaction.Status;
+import jakarta.transaction.Synchronization;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.Transaction;
 import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 import java.io.IOException;
@@ -197,7 +197,7 @@ public class BitronixTransaction implements Transaction, BitronixTransactionMBea
             String extraErrorDetails = TransactionManagerServices.getExceptionAnalyzer().extractExtraXAExceptionDetails(ex);
             if (BitronixXAException.isUnilateralRollback(ex)) {
                 // The resource unilaterally rolled back here. We have to throw an exception to indicate this but
-                // The signature of this method is inherited from javax.transaction.Transaction. Thereof, we have choice
+                // The signature of this method is inherited from jakarta.transaction.Transaction. Thereof, we have choice
                 // between creating a sub-exception of SystemException or using a RuntimeException. Is that the best way
                 // forward as this 'hidden' exception can be left throw out at unexpected locations where SystemException
                 // should be rethrown but the exception thrown here should be catched & handled... ?

@@ -36,7 +36,7 @@ import java.util.Date;
  * <p>The {@link XAResource} state during a transaction participation is also contained: assigned XID, transaction
  * start / end state...</p>
  * <p>There is exactly one {@link XAResourceHolderState} object per {@link XAResourceHolder} per
- * {@link javax.transaction.Transaction}.</p>
+ * {@link jakarta.transaction.Transaction}.</p>
  *
  * @see bitronix.tm.resource.common.ResourceBean
  * @author Ludovic Orban

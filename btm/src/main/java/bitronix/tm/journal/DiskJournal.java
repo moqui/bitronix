@@ -24,7 +24,7 @@ import bitronix.tm.utils.Uid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.transaction.Status;
+import jakarta.transaction.Status;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -97,7 +97,7 @@ public class DiskJournal implements Journal, MigratableJournal, ReadableJournal 
      * Log a new transaction status to journal. Note that the DiskJournal will not check the flow of the transaction.
      * If you call this method with erroneous data, it will be added to the journal anyway.
      *
-     * @param status transaction status to log. See {@link javax.transaction.Status} constants.
+     * @param status transaction status to log. See {@link jakarta.transaction.Status} constants.
      * @param gtrid raw GTRID of the transaction.
      * @param uniqueNames unique names of the {@link bitronix.tm.resource.common.ResourceBean}s participating in
      * this transaction.

@@ -96,8 +96,8 @@ public abstract class ResourceBean implements Serializable {
 
     /**
      * Specify if the XA resource wrapper should enlist/delist this resource automatically in global transactions.
-     * When set to false, you have to enlist resources yourself with {@link javax.transaction.Transaction#enlistResource(javax.transaction.xa.XAResource)} and delist them
-     * {@link javax.transaction.Transaction#delistResource(javax.transaction.xa.XAResource, int)}.
+     * When set to false, you have to enlist resources yourself with {@link jakarta.transaction.Transaction#enlistResource(javax.transaction.xa.XAResource)} and delist them
+     * {@link jakarta.transaction.Transaction#delistResource(javax.transaction.xa.XAResource, int)}.
      * @param automaticEnlistingEnabled true if the the XA resource wrapper should enlist/delist this resource automatically in global
      * transactions.
      */

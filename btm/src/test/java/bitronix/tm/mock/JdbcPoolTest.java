@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import javax.sql.XADataSource;
-import javax.transaction.TransactionManager;
+import jakarta.transaction.TransactionManager;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.event.TableModelListener;
-import javax.transaction.Status;
+import jakarta.transaction.Status;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
