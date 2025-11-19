@@ -16,8 +16,15 @@ codebase, removing obsolete bytecode manipulation layers, adopting Java 17+,
 improving test stability, and bringing the build system and documentation into
 the modern era.
 
+In addition, this release upgrades the JTA itself from 1.1 to Jakarta JTA 2.0.1
+bringing the latest JTA specification into the project. This is a **breaking
+change** and all implementations must switch from javax.transaction to
+jakarta.transaction.
+
 ### Changed
 
+- **Switch to Jakarta JTA 2.0.1**, a major breaking change that requires
+  updating imports for consuming projects.
 - **Set Java 17 as the minimum required JVM version.**
 - Modernized reflection usage:
   - Replaced `Class.newInstance()` with
