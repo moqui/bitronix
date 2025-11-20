@@ -11,7 +11,7 @@
     <packaging>pom</packaging>
     <name>Bitronix Transaction Manager</name>
     <description>
-        The Bitronix Transaction Manager (BTM) is a simple but complete implementation of the JTA 1.1 API.
+        The Bitronix Transaction Manager (BTM) is a simple but complete implementation of the Jakarta Transactions 2.0 API.
     </description>
     <inceptionYear>2006</inceptionYear>
     <url>https://github.com/moqui/bitronix</url>

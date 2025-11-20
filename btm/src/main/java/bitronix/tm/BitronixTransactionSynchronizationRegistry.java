@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Implementation of JTA 1.1 {@link TransactionSynchronizationRegistry}.
+ * Implementation of Jakarta Transactions 2.0 {@link TransactionSynchronizationRegistry}.
  *
  * @author Ludovic Orban
  */

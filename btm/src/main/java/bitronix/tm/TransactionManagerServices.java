@@ -76,7 +76,7 @@ public class TransactionManagerServices {
     }
 
     /**
-     * Create the JTA 1.1 TransactionSynchronizationRegistry.
+     * Create the Jakarta Transactions 2.0 TransactionSynchronizationRegistry.
      * @return the TransactionSynchronizationRegistry.
      */
     public static BitronixTransactionSynchronizationRegistry getTransactionSynchronizationRegistry() {
