@@ -5,6 +5,10 @@ the Java Transaction API (JTA) 1.1. This eXtended Architecture (XA) transaction
 manager provides all services required by the JTA while keeping the code as
 simple as possible for easier understanding of XA semantics.
 
+## Maintainers
+
+Lead Maintainer: Taher Alkhateeb <taher@pythys.com>
+
 ## Building
 
 To build this project, you must have JDK17+ installed on your machine.
