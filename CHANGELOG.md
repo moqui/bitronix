@@ -14,17 +14,52 @@ After more than a decade of inactivity, **Bitronix Transaction Manager** has
 been revived and modernized. This release focuses heavily on simplifying the
 codebase, removing obsolete bytecode manipulation layers, adopting Java 17+,
 improving test stability, and bringing the build system and documentation into
-the modern era.
+the modern era. It also switched from JTA 1.1 to Jakarta JTA 2.0 which is a
+**breaking change**.
 
-In addition, this release upgrades the JTA itself from 1.1 to Jakarta JTA 2.0.1
-bringing the latest JTA specification into the project. This is a **breaking
-change** and all implementations must switch from javax.transaction to
-jakarta.transaction.
+### Jakarta Migration
+
+Bitronix 4.0 upgrades the project from **JTA 1.1 (`javax.transaction`)** to
+**Jakarta JTA 2.0.1 (`jakarta.transaction`)**. This is a **major breaking
+change** that requires all consuming applications to migrate from the `javax.*`
+namespace to the `jakarta.*` namespace.
+
+- Most JTA classes moved to `jakarta.transaction.*` except for
+  `javax.transaction.xa.*` which remains part of the JDK.
+- The API surface remains the same; the breaking change is the mandatory
+  **package rename** introduced by Jakarta EE.
+- Applications still using `javax.transaction` **cannot** use bitronix 4.0
+  without updating imports and dependencies.
+  
+#### Required Changes
+
+1. Update Imports from `javax.transaction.*` to `jakarta.transaction.*` except
+   for `javax.transaction.xa.*` which remains part of the JDK.
+
+```patch
+-import javax.transaction.UserTransaction;
+-import javax.transaction.TransactionManager;
++import jakarta.transaction.UserTransaction;
++import jakarta.transaction.TransactionManager;
+```
+
+2. Update Dependencies. For example:
+
+```patch
+-<dependency>
+-    <groupId>javax.transaction</groupId>
+-    <artifactId>jta</artifactId>
+-    <version>1.1</version>
+-</dependency>
++<dependency>
++    <groupId>jakarta.transaction</groupId>
++    <artifactId>jakarta.transaction-api</artifactId>
++    <version>2.0.1</version>
++</dependency>
+```
 
 ### Changed
 
-- **Switch to Jakarta JTA 2.0.1**, a major breaking change that requires
-  updating imports for consuming projects.
 - **Set Java 17 as the minimum required JVM version.**
 - Modernized reflection usage:
   - Replaced `Class.newInstance()` with
