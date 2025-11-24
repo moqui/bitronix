@@ -1,26 +1,22 @@
-= Home
+= Bitronix Transaction Manager
 
-.BTM 2.1.x approaching End Of Life
-****
-Here is the home of the 2.1.x and earlier version of BTM. If you're looking for the latest version, you should go have a look on https://github.com/bitronix/btm[GitHub].
-
-BTM 2.1.x is now in maintenance mode and only critical bug fixes are considered. Any new development is now happening in the 3.0.x version.
-****
-
-== Home of BTM, the Bitronix JTA Transaction Manager
-
-The Bitronix Transaction Manager (BTM) is a simple but complete implementation of the JTA 1.1 API. It is a fully working XA transaction manager that provides all services required by the JTA API while trying to keep the code as simple as possible for easier understanding of the XA semantics.
+The Bitronix Transaction Manager (BTM) is a simple but complete implementation
+of the Jakarta JTA 2.0 API. It is a fully working XA transaction manager that
+provides all services required by the JTA API while trying to keep the code as
+simple as possible for easier understanding of the XA semantics.
      
 **THE PRIMARY GOAL OF THE BTM PROJECT IS TO MAKE JTA A COMMODITY**
 
-This is BTM's strongest point compared to its competitors: it is trivial to configure and when something goes wrong it is much easier to figure out what to do thanks to the great care placed in useful error reporting and logging.
+This is BTM's strongest point compared to its competitors: it is trivial to
+configure and when something goes wrong it is much easier to figure out what to
+do thanks to the great care placed in useful error reporting and logging.
 
 ****
 Don't know how to get started? Read the link:NewUserGuide.html[new user's guide].
 ****
 
 ****
-Looking for help? Check how to link:Support.html[get support].
+For support check the bug tracker at https://github.com/moqui/bitronix/issues
 ****
 
 == Using BTM
@@ -29,16 +25,8 @@ link:Overview.html[Overview]
 
 link:FAQ.html[FAQ]
 
-link:Download.html[Download]
-
-Roadmap - see https://github.com/bitronix/btm/wiki[GitHub] (or link:Roadmap.html[this old page])
-
 link:RecommendedReadings.html[Recommended Readings]
 
-link:GettingSupport.html[Getting support]
-
-link:WhoUsesBTM.html[Who uses BTM]
-     
 == Architecture
 
 link:JtaBestPractices.html[JTA Best Practices]
@@ -53,12 +41,6 @@ link:JdbcXaSupportEvaluation.html[Databases XA support evaluation]
 
 link:JmsXaSupportEvaluation.html[JMS servers XA support evaluation]
  
-== Version 2.x.x
-
-link:WhatsNew2x.html[What's new in version 2.x.x]
-
-API javadoc - TODO - where will this be deployed?
-
 == Configuration
 
 === Transaction manager
