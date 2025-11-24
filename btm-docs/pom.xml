@@ -4,6 +4,7 @@
     <parent>
         <groupId>org.moqui</groupId>
         <artifactId>bitronix</artifactId>
+        <version>4.0.0-BETA</version>
     </parent>
 
     <artifactId>btm-docs</artifactId>
