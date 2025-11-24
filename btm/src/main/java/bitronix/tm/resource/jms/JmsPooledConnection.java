@@ -27,11 +27,11 @@ import bitronix.tm.utils.Scheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.jms.JMSException;
-import javax.jms.Session;
-import javax.jms.TemporaryQueue;
-import javax.jms.XAConnection;
-import javax.jms.XASession;
+import jakarta.jms.JMSException;
+import jakarta.jms.Session;
+import jakarta.jms.TemporaryQueue;
+import jakarta.jms.XAConnection;
+import jakarta.jms.XASession;
 import javax.transaction.xa.XAResource;
 import java.util.ArrayList;
 import java.util.Collection;

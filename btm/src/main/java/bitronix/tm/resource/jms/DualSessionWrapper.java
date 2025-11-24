@@ -25,27 +25,27 @@ import bitronix.tm.resource.common.TransactionContextHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.jms.BytesMessage;
-import javax.jms.Destination;
-import javax.jms.IllegalStateException;
-import javax.jms.JMSException;
-import javax.jms.MapMessage;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-import javax.jms.QueueBrowser;
-import javax.jms.Session;
-import javax.jms.StreamMessage;
-import javax.jms.TemporaryQueue;
-import javax.jms.TemporaryTopic;
-import javax.jms.TextMessage;
-import javax.jms.Topic;
-import javax.jms.TopicSubscriber;
-import javax.jms.TransactionInProgressException;
-import javax.jms.TransactionRolledBackException;
-import javax.jms.XASession;
+import jakarta.jms.BytesMessage;
+import jakarta.jms.Destination;
+import jakarta.jms.IllegalStateException;
+import jakarta.jms.JMSException;
+import jakarta.jms.MapMessage;
+import jakarta.jms.Message;
+import jakarta.jms.MessageConsumer;
+import jakarta.jms.MessageListener;
+import jakarta.jms.MessageProducer;
+import jakarta.jms.ObjectMessage;
+import jakarta.jms.QueueBrowser;
+import jakarta.jms.Session;
+import jakarta.jms.StreamMessage;
+import jakarta.jms.TemporaryQueue;
+import jakarta.jms.TemporaryTopic;
+import jakarta.jms.TextMessage;
+import jakarta.jms.Topic;
+import jakarta.jms.TopicSubscriber;
+import jakarta.jms.TransactionInProgressException;
+import jakarta.jms.TransactionRolledBackException;
+import jakarta.jms.XASession;
 import jakarta.transaction.RollbackException;
 import jakarta.transaction.SystemException;
 import javax.transaction.xa.XAResource;
@@ -327,6 +327,42 @@ public class DualSessionWrapper extends AbstractXAResourceHolder<DualSessionWrap
     }
 
     @Override
+    public MessageConsumer createSharedConsumer(Topic topic, String sharedSubscriptionName) throws JMSException {
+        MessageProducerConsumerKey key = new MessageProducerConsumerKey(topic, sharedSubscriptionName, null);
+        if (log.isDebugEnabled()) { log.debug("looking for shared consumer based on " + key); }
+        MessageConsumerWrapper messageConsumer = (MessageConsumerWrapper) messageConsumers.get(key);
+        if (messageConsumer == null) {
+            if (log.isDebugEnabled()) { log.debug("found no shared consumer based on " + key + ", creating it"); }
+            messageConsumer = new MessageConsumerWrapper(getSession().createSharedConsumer(topic, sharedSubscriptionName), this, pooledConnection.getPoolingConnectionFactory());
+
+            if (pooledConnection.getPoolingConnectionFactory().getCacheProducersConsumers()) {
+                if (log.isDebugEnabled()) { log.debug("caching shared consumer via key " + key); }
+                messageConsumers.put(key, messageConsumer);
+            }
+        }
+        else if (log.isDebugEnabled()) { log.debug("found shared consumer based on " + key + ", recycling it: " + messageConsumer); }
+        return messageConsumer;
+    }
+
+    @Override
+    public MessageConsumer createSharedConsumer(Topic topic, String sharedSubscriptionName, String messageSelector) throws JMSException {
+        MessageProducerConsumerKey key = new MessageProducerConsumerKey(topic, sharedSubscriptionName, messageSelector);
+        if (log.isDebugEnabled()) { log.debug("looking for shared consumer based on " + key); }
+        MessageConsumerWrapper messageConsumer = (MessageConsumerWrapper) messageConsumers.get(key);
+        if (messageConsumer == null) {
+            if (log.isDebugEnabled()) { log.debug("found no shared consumer based on " + key + ", creating it"); }
+            messageConsumer = new MessageConsumerWrapper(getSession().createSharedConsumer(topic, sharedSubscriptionName), this, pooledConnection.getPoolingConnectionFactory());
+
+            if (pooledConnection.getPoolingConnectionFactory().getCacheProducersConsumers()) {
+                if (log.isDebugEnabled()) { log.debug("caching shared consumer via key " + key); }
+                messageConsumers.put(key, messageConsumer);
+            }
+        }
+        else if (log.isDebugEnabled()) { log.debug("found shared consumer based on " + key + ", recycling it: " + messageConsumer); }
+        return messageConsumer;
+    }
+
+    @Override
     public TopicSubscriber createDurableSubscriber(Topic topic, String name) throws JMSException {
         MessageProducerConsumerKey key = new MessageProducerConsumerKey(topic);
         if (log.isDebugEnabled()) { log.debug("looking for durable subscriber based on " + key); }
@@ -360,6 +396,54 @@ public class DualSessionWrapper extends AbstractXAResourceHolder<DualSessionWrap
         }
         else if (log.isDebugEnabled()) { log.debug("found durable subscriber based on " + key + ", recycling it: " + topicSubscriber); }
         return topicSubscriber;
+    }
+
+    @Override
+    public MessageConsumer createDurableConsumer(Topic topic, String name) throws JMSException {
+        MessageProducerConsumerKey key = new MessageProducerConsumerKey(topic, name, null);
+        if (log.isDebugEnabled()) { log.debug("looking for durable consumer based on " + key); }
+        MessageConsumerWrapper messageConsumer = (MessageConsumerWrapper) messageConsumers.get(key);
+        if (messageConsumer == null) {
+            if (log.isDebugEnabled()) { log.debug("found no durable consumer based on " + key + ", creating it"); }
+            messageConsumer = new MessageConsumerWrapper(getSession().createDurableConsumer(topic, name), this, pooledConnection.getPoolingConnectionFactory());
+
+            if (pooledConnection.getPoolingConnectionFactory().getCacheProducersConsumers()) {
+                if (log.isDebugEnabled()) { log.debug("caching durable consumer via key " + key); }
+                messageConsumers.put(key, messageConsumer);
+            }
+        }
+        else if (log.isDebugEnabled()) { log.debug("found durable consumer based on " + key + ", recycling it: " + messageConsumer); }
+        return messageConsumer;
+    }
+
+    @Override
+    public MessageConsumer createDurableConsumer(Topic topic, String name, String messageSelector, boolean noLocal) throws JMSException {
+        MessageProducerConsumerKey key = new MessageProducerConsumerKey(topic, name, messageSelector, noLocal);
+        if (log.isDebugEnabled()) { log.debug("looking for durable consumer based on " + key); }
+        MessageConsumerWrapper messageConsumer = (MessageConsumerWrapper) messageConsumers.get(key);
+        if (messageConsumer == null) {
+            if (log.isDebugEnabled()) { log.debug("found no durable consumer based on " + key + ", creating it"); }
+            messageConsumer = new MessageConsumerWrapper(getSession().createDurableConsumer(topic, name, messageSelector, noLocal), this, pooledConnection.getPoolingConnectionFactory());
+
+            if (pooledConnection.getPoolingConnectionFactory().getCacheProducersConsumers()) {
+                if (log.isDebugEnabled()) { log.debug("caching durable consumer via key " + key); }
+                messageConsumers.put(key, messageConsumer);
+            }
+        }
+        else if (log.isDebugEnabled()) { log.debug("found durable consumer based on " + key + ", recycling it: " + messageConsumer); }
+        return messageConsumer;
+    }
+
+    @Override
+    public MessageConsumer createSharedDurableConsumer(Topic topic, String name) throws JMSException
+    {
+        return null;
+    }
+
+    @Override
+    public MessageConsumer createSharedDurableConsumer(Topic topic, String name, String messageSelector) throws JMSException
+    {
+        return null;
     }
 
     @Override
@@ -465,13 +549,13 @@ public class DualSessionWrapper extends AbstractXAResourceHolder<DualSessionWrap
     }
 
     @Override
-    public QueueBrowser createBrowser(javax.jms.Queue queue) throws JMSException {
+    public QueueBrowser createBrowser(jakarta.jms.Queue queue) throws JMSException {
         enlistResource();
         return getSession().createBrowser(queue);
     }
 
     @Override
-    public QueueBrowser createBrowser(javax.jms.Queue queue, String messageSelector) throws JMSException {
+    public QueueBrowser createBrowser(jakarta.jms.Queue queue, String messageSelector) throws JMSException {
         enlistResource();
         return getSession().createBrowser(queue, messageSelector);
     }
@@ -519,7 +603,7 @@ public class DualSessionWrapper extends AbstractXAResourceHolder<DualSessionWrap
     }
 
     @Override
-    public javax.jms.Queue createQueue(String queueName) throws JMSException {
+    public jakarta.jms.Queue createQueue(String queueName) throws JMSException {
         return getSession().createQueue(queueName);
     }
 

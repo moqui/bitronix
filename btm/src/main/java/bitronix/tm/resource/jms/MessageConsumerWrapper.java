@@ -17,10 +17,10 @@ package bitronix.tm.resource.jms;
 
 import bitronix.tm.resource.common.TransactionContextHelper;
 
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
+import jakarta.jms.JMSException;
+import jakarta.jms.Message;
+import jakarta.jms.MessageConsumer;
+import jakarta.jms.MessageListener;
 import jakarta.transaction.RollbackException;
 import jakarta.transaction.SystemException;
 
@@ -48,7 +48,7 @@ public class MessageConsumerWrapper implements MessageConsumer {
     /**
      * Enlist this session into the current transaction if automaticEnlistingEnabled = true for this resource.
      * If no transaction is running then this method does nothing.
-     * @throws javax.jms.JMSException if an exception occurs
+     * @throws jakarta.jms.JMSException if an exception occurs
      */
     protected void enlistResource() throws JMSException {
         if (poolingConnectionFactory.getAutomaticEnlistingEnabled()) {

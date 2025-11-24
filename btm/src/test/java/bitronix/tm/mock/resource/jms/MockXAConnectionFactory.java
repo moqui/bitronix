@@ -19,16 +19,17 @@ import bitronix.tm.mock.resource.MockXAResource;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageProducer;
-import javax.jms.Queue;
-import javax.jms.Session;
-import javax.jms.Topic;
-import javax.jms.XAConnection;
-import javax.jms.XAConnectionFactory;
-import javax.jms.XASession;
+import jakarta.jms.Destination;
+import jakarta.jms.XAJMSContext;
+import jakarta.jms.JMSException;
+import jakarta.jms.MessageConsumer;
+import jakarta.jms.MessageProducer;
+import jakarta.jms.Queue;
+import jakarta.jms.Session;
+import jakarta.jms.Topic;
+import jakarta.jms.XAConnection;
+import jakarta.jms.XAConnectionFactory;
+import jakarta.jms.XASession;
 
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -93,6 +94,16 @@ public class MockXAConnectionFactory implements XAConnectionFactory {
 
     public XAConnection createXAConnection(String jndiName, String jndiName1) throws JMSException {
         return createXAConnection();
+    }
+
+    @Override
+    public XAJMSContext createXAContext() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public XAJMSContext createXAContext(String userName, String password) {
+        throw new UnsupportedOperationException();
     }
 
     public static void setStaticCloseXAConnectionException(JMSException e) {

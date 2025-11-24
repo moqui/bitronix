@@ -28,11 +28,12 @@ import bitronix.tm.utils.ManagementRegistrar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.XAConnection;
-import javax.jms.XAConnectionFactory;
+import jakarta.jms.Connection;
+import jakarta.jms.ConnectionFactory;
+import jakarta.jms.JMSContext;
+import jakarta.jms.JMSException;
+import jakarta.jms.XAConnection;
+import jakarta.jms.XAConnectionFactory;
 import javax.naming.NamingException;
 import javax.naming.Reference;
 import javax.naming.StringRefAddr;
@@ -173,6 +174,26 @@ public class PoolingConnectionFactory extends ResourceBean implements Connection
     public Connection createConnection(String userName, String password) throws JMSException {
         if (log.isDebugEnabled()) { log.debug("JMS connections are pooled, username and password ignored"); }
         return createConnection();
+    }
+
+    @Override
+    public JMSContext createContext() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public JMSContext createContext(String userName, String password) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public JMSContext createContext(String userName, String password, int sessionMode) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public JMSContext createContext(int sessionMode) {
+        throw new UnsupportedOperationException();
     }
 
     void unregister(JmsPooledConnection jmsPooledConnection) {

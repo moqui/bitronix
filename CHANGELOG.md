@@ -19,10 +19,12 @@ the modern era. It also switched from JTA 1.1 to Jakarta JTA 2.0 which is a
 
 ### Jakarta Migration
 
+#### JTA Migration
+
 Bitronix 4.0 upgrades the project from **JTA 1.1 (`javax.transaction`)** to
 **Jakarta JTA 2.0.1 (`jakarta.transaction`)**. This is a **major breaking
-change** that requires all consuming applications to migrate from the `javax.*`
-namespace to the `jakarta.*` namespace.
+change** that requires all consuming applications to migrate from the
+`javax.transaction.*` namespace to the `jakarta.transaction.*` namespace.
 
 - Most JTA classes moved to `jakarta.transaction.*` except for
   `javax.transaction.xa.*` which remains part of the JDK.
@@ -31,6 +33,12 @@ namespace to the `jakarta.*` namespace.
 - Applications still using `javax.transaction` **cannot** use bitronix 4.0
   without updating imports and dependencies.
   
+#### JMS Migration
+
+Bitronix 4.0 upgrades the project from **Genronimo JMS 1.1** to **Jakarta JMS
+3.1.0**. This is a **major breaking change** that requires all consuming
+applications to migrate from `javax.jms` to `jakarta.jms`.
+
 #### Required Changes
 
 1. Update Imports from `javax.transaction.*` to `jakarta.transaction.*` except
@@ -42,6 +50,8 @@ namespace to the `jakarta.*` namespace.
 +import jakarta.transaction.UserTransaction;
 +import jakarta.transaction.TransactionManager;
 ```
+
+2. Update imports from `javax.jms.*` to `jakarta.jms.*`
 
 2. Update Dependencies. For example:
 
@@ -55,6 +65,19 @@ namespace to the `jakarta.*` namespace.
 +    <groupId>jakarta.transaction</groupId>
 +    <artifactId>jakarta.transaction-api</artifactId>
 +    <version>2.0.1</version>
++</dependency>
+```
+
+```patch
+-<dependency>
+-    <groupId>org.apache.geronimo.specs</groupId>
+-    <artifactId>geronimo-jms_1.1_spec</artifactId>
+-    <version>1.1.1</version>
+-</dependency>
++<dependency>
++    <groupId>jakarta.jms</groupId>
++    <artifactId>jakarta.jms-api</artifactId>
++    <version>3.1.0</version>
 +</dependency>
 ```
 

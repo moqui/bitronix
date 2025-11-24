@@ -17,10 +17,11 @@ package bitronix.tm.resource.jms;
 
 import bitronix.tm.resource.common.TransactionContextHelper;
 
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageProducer;
+import jakarta.jms.CompletionListener;
+import jakarta.jms.Destination;
+import jakarta.jms.JMSException;
+import jakarta.jms.Message;
+import jakarta.jms.MessageProducer;
 import jakarta.transaction.RollbackException;
 import jakarta.transaction.SystemException;
 
@@ -95,6 +96,30 @@ public class MessageProducerWrapper implements MessageProducer {
     }
 
     @Override
+    public void send(Message message, CompletionListener completionListener) throws JMSException {
+        enlistResource();
+        getMessageProducer().send(message, completionListener);
+    }
+
+    @Override
+    public void send(Message message, int deliveryMode, int priority, long timeToLive, CompletionListener completionListener) throws JMSException {
+        enlistResource();
+        getMessageProducer().send(message, deliveryMode, priority, timeToLive, completionListener);
+    }
+
+    @Override
+    public void send(Destination destination, Message message, CompletionListener completionListener) throws JMSException {
+        enlistResource();
+        getMessageProducer().send(destination, message, completionListener);
+    }
+
+    @Override
+    public void send(Destination destination, Message message, int deliveryMode, int priority, long timeToLive, CompletionListener completionListener) throws JMSException {
+        enlistResource();
+        getMessageProducer().send(destination, message, deliveryMode, priority, timeToLive, completionListener);
+    }
+
+    @Override
     public void close() throws JMSException {
         // do nothing as the close is handled by the session handle
     }
@@ -149,6 +174,16 @@ public class MessageProducerWrapper implements MessageProducer {
     @Override
     public long getTimeToLive() throws JMSException {
         return getMessageProducer().getTimeToLive();
+    }
+
+    @Override
+    public void setDeliveryDelay(long deliveryDelay) throws JMSException {
+        getMessageProducer().setDeliveryDelay(deliveryDelay);
+    }
+
+    @Override
+    public long getDeliveryDelay() throws JMSException {
+        return getMessageProducer().getDeliveryDelay();
     }
 
     @Override

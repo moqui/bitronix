@@ -18,10 +18,11 @@ package bitronix.tm.resource.jms.lrc;
 import bitronix.tm.utils.ClassLoaderUtils;
 import bitronix.tm.utils.PropertyUtils;
 
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.XAConnection;
-import javax.jms.XAConnectionFactory;
+import jakarta.jms.ConnectionFactory;
+import jakarta.jms.JMSException;
+import jakarta.jms.XAConnection;
+import jakarta.jms.XAConnectionFactory;
+import jakarta.jms.XAJMSContext;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,6 +79,16 @@ public class LrcXAConnectionFactory implements XAConnectionFactory {
         } catch (Exception ex) {
             throw (JMSException) new JMSException("unable to connect to non-XA resource " + connectionFactoryClassName).initCause(ex);
         }
+    }
+
+    @Override
+    public XAJMSContext createXAContext() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public XAJMSContext createXAContext(String userName, String password) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

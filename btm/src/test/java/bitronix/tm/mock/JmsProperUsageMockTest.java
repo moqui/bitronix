@@ -26,10 +26,10 @@ import bitronix.tm.resource.jms.PoolingConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.jms.Connection;
-import javax.jms.MessageProducer;
-import javax.jms.Queue;
-import javax.jms.Session;
+import jakarta.jms.Connection;
+import jakarta.jms.MessageProducer;
+import jakarta.jms.Queue;
+import jakarta.jms.Session;
 import jakarta.transaction.Status;
 import javax.transaction.xa.XAResource;
 import java.io.ByteArrayInputStream;

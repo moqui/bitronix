@@ -24,7 +24,7 @@ import bitronix.tm.utils.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.jms.XAConnectionFactory;
+import jakarta.jms.XAConnectionFactory;
 import javax.sql.XADataSource;
 import java.io.File;
 import java.io.FileInputStream;
@@ -268,7 +268,7 @@ public class ResourceLoader implements Service {
                 if (producer == null)
                     throw new ResourceConfigurationException("property [className] " +
                             "of resource [" + configuredName + "] in resources configuration file " +
-                            "must be the name of a class implementing either javax.sql.XADataSource or javax.jms.XAConnectionFactory");
+                            "must be the name of a class implementing either javax.sql.XADataSource or jakarta.jms.XAConnectionFactory");
                 return producer;
             }
         }

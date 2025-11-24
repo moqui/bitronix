@@ -3,7 +3,7 @@ package bitronix.tm.resource.jms;
 import bitronix.tm.mock.resource.jms.MockXAConnectionFactory;
 import junit.framework.TestCase;
 
-import javax.jms.Connection;
+import jakarta.jms.Connection;
 
 
 /**

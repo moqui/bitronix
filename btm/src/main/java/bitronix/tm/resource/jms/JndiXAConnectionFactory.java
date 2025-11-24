@@ -15,9 +15,11 @@
  */
 package bitronix.tm.resource.jms;
 
-import javax.jms.JMSException;
-import javax.jms.XAConnection;
-import javax.jms.XAConnectionFactory;
+import jakarta.jms.JMSException;
+import jakarta.jms.JMSRuntimeException;
+import jakarta.jms.XAConnection;
+import jakarta.jms.XAConnectionFactory;
+import jakarta.jms.XAJMSContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -211,6 +213,26 @@ public class JndiXAConnectionFactory implements XAConnectionFactory {
             return wrappedFactory.createXAConnection(userName, password);
         } catch (NamingException ex) {
             throw (JMSException) new JMSException("error looking up wrapped XAConnectionFactory at " + name).initCause(ex);
+        }
+    }
+
+    @Override
+    public XAJMSContext createXAContext() {
+        try {
+            init();
+            return wrappedFactory.createXAContext();
+        } catch (NamingException ex) {
+            throw (JMSRuntimeException) new JMSRuntimeException("error looking up wrapped XAConnectionFactory at " + name).initCause(ex);
+        }
+    }
+
+    @Override
+    public XAJMSContext createXAContext(String userName, String password) {
+        try {
+            init();
+            return wrappedFactory.createXAContext(userName, password);
+        } catch (NamingException ex) {
+            throw (JMSRuntimeException) new JMSRuntimeException("error looking up wrapped XAConnectionFactory at " + name).initCause(ex);
         }
     }
 

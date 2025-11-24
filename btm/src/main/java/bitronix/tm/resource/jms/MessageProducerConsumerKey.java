@@ -17,14 +17,14 @@ package bitronix.tm.resource.jms;
 
 import bitronix.tm.internal.BitronixRuntimeException;
 
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.Queue;
-import javax.jms.Topic;
+import jakarta.jms.Destination;
+import jakarta.jms.JMSException;
+import jakarta.jms.Queue;
+import jakarta.jms.Topic;
 
 /**
  * JMS destination wrapper optimized for use with hashed collections where it is the key and a
- * {@link javax.jms.MessageProducer} or a {@link javax.jms.MessageConsumer} is the value.
+ * {@link jakarta.jms.MessageProducer} or a {@link jakarta.jms.MessageConsumer} is the value.
  *
  * @author Ludovic Orban
  */
@@ -32,23 +32,41 @@ public class MessageProducerConsumerKey {
 
     private final Destination destination;
     private final String messageSelector;
+    private final String name;
     private final Boolean noLocal;
 
     public MessageProducerConsumerKey(Destination destination) {
         this.destination = destination;
         this.messageSelector = null;
+        this.name = null;
         this.noLocal = null;
     }
 
     public MessageProducerConsumerKey(Destination destination, String messageSelector) {
         this.destination = destination;
         this.messageSelector = messageSelector;
+        this.name = null;
+        this.noLocal = null;
+    }
+
+    public MessageProducerConsumerKey(Destination destination, String name, String messageSelector) {
+        this.destination = destination;
+        this.messageSelector = messageSelector;
+        this.name = name;
         this.noLocal = null;
     }
 
     public MessageProducerConsumerKey(Destination destination, String messageSelector, boolean noLocal) {
         this.destination = destination;
         this.messageSelector = messageSelector;
+        this.name = null;
+        this.noLocal = noLocal;
+    }
+
+    public MessageProducerConsumerKey(Destination destination, String name, String messageSelector, boolean noLocal) {
+        this.destination = destination;
+        this.messageSelector = messageSelector;
+        this.name = name;
         this.noLocal = noLocal;
     }
 
@@ -60,6 +78,8 @@ public class MessageProducerConsumerKey {
             if (!areEquals(getDestinationName(), otherKey.getDestinationName()))
                 return false;
             if (!areEquals(messageSelector, otherKey.messageSelector))
+                return false;
+            if (!areEquals(name, otherKey.name))
                 return false;
             if (!areEquals(noLocal, otherKey.noLocal))
                 return false;
@@ -102,7 +122,7 @@ public class MessageProducerConsumerKey {
 
     @Override
     public int hashCode() {
-        return hash(getDestinationName()) + hash(messageSelector) + hash(noLocal);
+        return hash(getDestinationName()) + hash(messageSelector) + hash(name) + hash(noLocal);
     }
 
     private static int hash(Object o) {
@@ -115,6 +135,7 @@ public class MessageProducerConsumerKey {
     public String toString() {
         return "a MessageProducerConsumerKey on " + destination +
                 (messageSelector == null ? "" : (" with selector '" + messageSelector) + "'") +
+                (name == null ? "" : (" with name '" + name) + "'") +
                 (noLocal == null ? "" : (" and noLocal=" + noLocal));
     }
 }

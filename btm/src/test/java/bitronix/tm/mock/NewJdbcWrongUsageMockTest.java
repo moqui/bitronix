@@ -292,9 +292,9 @@ public class NewJdbcWrongUsageMockTest extends AbstractMockJdbcTest {
 
          tm.begin();
 
-         javax.jms.Connection c = pcf.createConnection();
-         javax.jms.Session s = c.createSession(true, 0);
-         javax.jms.MessageProducer p = s.createProducer(null);
+         jakarta.jms.Connection c = pcf.createConnection();
+         jakarta.jms.Session s = c.createSession(true, 0);
+         jakarta.jms.MessageProducer p = s.createProducer(null);
          p.send(null);
          c.close();
 
