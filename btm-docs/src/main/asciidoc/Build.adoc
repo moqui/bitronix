@@ -5,7 +5,7 @@
 * <<prerequisites,Prerequisites>>
 * <<source,Getting the Source>>
 * <<building,Building>>
-* <<ide,IDE Integration>>
+* <<releasing,Releasing>>
 
 [[prerequisites]]
 == Prerequisites
@@ -33,10 +33,7 @@ Go to the top level directory of the project and type:
 
 This will build BTM locally, run tests, build javadoc and install the generated artifacts in your local repository.
 
-[[ide]]
-== IDE Integration
+[[releasing]]
+== Releasing
 
-Because BTM supports JDBC3 and JDBC4 at the same time, setting up an IDE in a way that there are no errors can be "tricky".  See these links for an example of how an IDE can be configured.
-
-* link:ConfiguringIntelliJ.html[Configuring IntelliJ IDE]
 * link:ReleaseProcedure.html[Release procedure] 
