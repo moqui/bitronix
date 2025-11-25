@@ -125,14 +125,14 @@ public class ResourceLoader implements Service {
         // with a 100% JDBC application without requiring JMS libraries.
         try {
             if (XADataSource.class.isAssignableFrom(clazz)) {
-                return (XAResourceProducer) ClassLoaderUtils
-                    .loadClass(JDBC_RESOURCE_CLASSNAME)
+                return (XAResourceProducer)
+                    ((Class<?>) ClassLoaderUtils.loadClass(JDBC_RESOURCE_CLASSNAME))
                     .getDeclaredConstructor()
                     .newInstance();
             }
             if (XAConnectionFactory.class.isAssignableFrom(clazz)) {
-                return (XAResourceProducer) ClassLoaderUtils
-                    .loadClass(JMS_RESOURCE_CLASSNAME)
+                return (XAResourceProducer)
+                    ((Class<?>) ClassLoaderUtils.loadClass(JMS_RESOURCE_CLASSNAME))
                     .getDeclaredConstructor()
                     .newInstance();
             }
