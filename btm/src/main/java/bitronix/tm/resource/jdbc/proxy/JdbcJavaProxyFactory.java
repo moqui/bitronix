@@ -176,6 +176,7 @@ public class JdbcJavaProxyFactory implements JdbcProxyFactory {
         public ProxyFactory(Class<?>[] interfaces) {
             this.interfaces = interfaces;
         }
+        @SuppressWarnings("unchecked")
         public T newInstance(InvocationHandler handler) {
             if (handler == null) {
                 throw new NullPointerException();
