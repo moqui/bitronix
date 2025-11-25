@@ -81,6 +81,11 @@ applications to migrate from `javax.jms` to `jakarta.jms`.
 +</dependency>
 ```
 
+### Added
+
+- Integrated **Spotless** code formatting and linting to enforce consistent
+  style across the codebase. Formatting rules are defined in `style.xml`.
+
 ### Changed
 
 - **Set Java 17 as the minimum required JVM version.**
