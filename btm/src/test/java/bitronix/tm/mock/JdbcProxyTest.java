@@ -17,12 +17,15 @@ package bitronix.tm.mock;
 
 import bitronix.tm.BitronixTransactionManager;
 import bitronix.tm.TransactionManagerServices;
-import junit.framework.Assert;
-import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class JdbcProxyTest extends AbstractMockJdbcTest {
 
@@ -86,12 +89,12 @@ public class JdbcProxyTest extends AbstractMockJdbcTest {
         PreparedStatement prepareStatement1 = connection.prepareStatement("SELECT 1 FROM nothing WHERE a=? AND b=? AND c=? AND d=?");
         PreparedStatement prepareStatement2 = connection.prepareStatement("SELECT 1 FROM nothing WHERE a=? AND b=? AND c=? AND d=?");
 
-        Assert.assertSame(prepareStatement1.unwrap(PreparedStatement.class), prepareStatement2.unwrap(PreparedStatement.class));
+        assertSame(prepareStatement1.unwrap(PreparedStatement.class), prepareStatement2.unwrap(PreparedStatement.class));
 
         prepareStatement2.close();
 
         prepareStatement2 = connection.prepareStatement("SELECT 1 FROM nothing WHERE a=? AND b=? AND c=? AND d=?");
-        Assert.assertSame(prepareStatement1.unwrap(PreparedStatement.class), prepareStatement2.unwrap(PreparedStatement.class));
+        assertSame(prepareStatement1.unwrap(PreparedStatement.class), prepareStatement2.unwrap(PreparedStatement.class));
 
         prepareStatement1.close();
         prepareStatement2.close();
@@ -135,12 +138,12 @@ public class JdbcProxyTest extends AbstractMockJdbcTest {
         PreparedStatement prepareStatement1 = connection.prepareStatement("SELECT 1 FROM nothing WHERE a=? AND b=? AND c=? AND d=?");
         PreparedStatement prepareStatement2 = connection.prepareStatement("SELECT 1 FROM nothing WHERE a=? AND b=? AND c=? AND d=?");
 
-        Assert.assertNotSame(prepareStatement1.unwrap(PreparedStatement.class), prepareStatement2.unwrap(PreparedStatement.class));
+        assertNotSame(prepareStatement1.unwrap(PreparedStatement.class), prepareStatement2.unwrap(PreparedStatement.class));
 
         prepareStatement2.close();
 
         prepareStatement2 = connection.prepareStatement("SELECT 1 FROM nothing WHERE a=? AND b=? AND c=? AND d=?");
-        Assert.assertNotSame(prepareStatement1.unwrap(PreparedStatement.class), prepareStatement2.unwrap(PreparedStatement.class));
+        assertNotSame(prepareStatement1.unwrap(PreparedStatement.class), prepareStatement2.unwrap(PreparedStatement.class));
 
         prepareStatement1.close();
         prepareStatement2.close();
