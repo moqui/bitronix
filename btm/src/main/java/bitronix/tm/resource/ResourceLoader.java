@@ -15,25 +15,29 @@
  */
 package bitronix.tm.resource;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+import javax.sql.XADataSource;
+import jakarta.jms.XAConnectionFactory;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import bitronix.tm.TransactionManagerServices;
 import bitronix.tm.resource.common.XAResourceProducer;
 import bitronix.tm.utils.ClassLoaderUtils;
 import bitronix.tm.utils.InitializationException;
 import bitronix.tm.utils.PropertyUtils;
 import bitronix.tm.utils.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import jakarta.jms.XAConnectionFactory;
-import javax.sql.XADataSource;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 
 /**
  * XA resources pools configurator &amp; loader.
@@ -111,21 +115,34 @@ public class ResourceLoader implements Service {
      * @throws IllegalAccessException if the {@link XAResourceProducer} cannot be instantiated.
      * @throws InstantiationException if the {@link XAResourceProducer} cannot be instantiated.
      */
-    private static XAResourceProducer instantiate(String xaResourceClassName) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    private static XAResourceProducer instantiate(String xaResourceClassName)
+        throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+
         Class<?> clazz = ClassLoaderUtils.loadClass(xaResourceClassName);
-
-        // resource classes are instantiated via reflection so that there is no hard class binding between this internal
-        // transaction manager service and 3rd party libraries like the JMS ones.
-        // This allows using the TM with a 100% JDBC application without requiring JMS libraries.
-
-        if (XADataSource.class.isAssignableFrom(clazz)) {
-            return (XAResourceProducer) ClassLoaderUtils.loadClass(JDBC_RESOURCE_CLASSNAME).newInstance();
+        // resource classes are instantiated via reflection so that there is no
+        // hard class binding between this internal transaction manager service
+        // and 3rd party libraries like the JMS ones. This allows using the TM
+        // with a 100% JDBC application without requiring JMS libraries.
+        try {
+            if (XADataSource.class.isAssignableFrom(clazz)) {
+                return (XAResourceProducer) ClassLoaderUtils
+                    .loadClass(JDBC_RESOURCE_CLASSNAME)
+                    .getDeclaredConstructor()
+                    .newInstance();
+            }
+            if (XAConnectionFactory.class.isAssignableFrom(clazz)) {
+                return (XAResourceProducer) ClassLoaderUtils
+                    .loadClass(JMS_RESOURCE_CLASSNAME)
+                    .getDeclaredConstructor()
+                    .newInstance();
+            }
+        } catch (NoSuchMethodException | InvocationTargetException e) {
+            InstantiationException ie = new InstantiationException(
+                "Failed to instantiate resource producer: " + e.getMessage());
+            ie.initCause(e);
+            throw ie;
         }
-        else if (XAConnectionFactory.class.isAssignableFrom(clazz)) {
-            return (XAResourceProducer) ClassLoaderUtils.loadClass(JMS_RESOURCE_CLASSNAME).newInstance();
-        }
-        else
-            return null;
+        return null;
     }
 
     /**
