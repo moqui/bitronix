@@ -33,6 +33,16 @@ check linting issues:
 fix linting issues:
 `./mvnw spotless:apply`
 
+## Roadmap
+
+- Improve spotless rules and apply globally.
+- Cleanup btm-docs, and update to match latest code changes.
+- Thoroughly test the JMS implementation and fix as needed.
+- Take advantage of modern java constructs like streams and virtual threads.
+- Automate CI workflows.
+- Automate publishing to maven central.
+- Move some of the contents of this README to btm-docs
+
 ## Credits
 
 BTM was created and maintained by the Bitronix team, namely:
