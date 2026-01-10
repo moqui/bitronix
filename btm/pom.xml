@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.moqui</groupId>
         <artifactId>bitronix</artifactId>
-        <version>4.0.0-</version>
+        <version>4.0.0</version>
     </parent>
     <artifactId>btm</artifactId>
     <name>Bitronix Transaction Manager :: Core</name>
