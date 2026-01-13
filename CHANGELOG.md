@@ -6,7 +6,7 @@ in this file. The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.0.0] - 2025-XX-XX
+## [4.0.1] - 2026-01-10
 
 ### Summary
 
